@@ -53,6 +53,23 @@
           </form>
         </div>
       </li>
+      <li class="nav-item dropdown show">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
+          <i class="far fa-user"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right show" style="left: inherit; right: 0px;">
+          <span class="dropdown-item dropdown-header">Opciones de Sesión</span>
+          <div class="dropdown-divider"></div>
+          <a href="{{ route('changepassword') }}" class="dropdown-item">
+            <i class="fas fa-lock mr-2"></i> Cambiar contraseña
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{{ route('logout') }}" class="dropdown-item">
+            <i class="fas fa-door-open "></i> Salir
+          </a>
+          <div class="dropdown-divider"></div>
+
+      </li>
 
 
 
