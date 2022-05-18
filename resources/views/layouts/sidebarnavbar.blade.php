@@ -64,8 +64,16 @@
             <i class="fas fa-lock mr-2"></i> Cambiar contraseña
           </a>
           <div class="dropdown-divider"></div>
-          <a href="{{ route('logout') }}" class="dropdown-item">
-            <i class="fas fa-door-open "></i> Salir
+          <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-door-open "></i> Salir
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+
           </a>
           <div class="dropdown-divider"></div>
 
