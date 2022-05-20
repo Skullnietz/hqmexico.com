@@ -33,3 +33,10 @@ $mailData = [
 Mail::to("hello@example.com")->send(new TestEmail($mailData));
 dd("Mail Sent Successfuly!");
 });
+
+
+// * Rutas para los usuarios
+Route::GET('/userindex', [App\Http\Controllers\UserController::class, 'index'])->name('userindex');
+Route::GET('/usershow/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('usershow');
+Route::POST('/userupdate/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('userupdate');
+Route::GET('/userdelete/{id}', [App\Http\Controllers\UserController::class, 'delete'])->name('userdelete');
