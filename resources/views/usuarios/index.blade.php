@@ -21,7 +21,7 @@ active
           </ol>
         </div><!-- /.col -->
       </div>
-      <a style="" class="btn btn-sm btn-success" href=""><i class="fas fa-user-plus"></i> Agregar Usuario</a><!-- /.row -->
+      <a style="" class="btn btn-sm btn-success" href="/usuario-crear"><i class="fas fa-user-plus"></i> Agregar Usuario</a><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
   <!-- /.content-header -->

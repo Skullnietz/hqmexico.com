@@ -26,6 +26,7 @@ Route::get('/changepassword', [App\Http\Controllers\HomeController::class, 'chan
 Route::post('/updatepassword', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatepassword');
 
 Route::get('/usuarios', [App\Http\Controllers\UserController::class, 'index'])->name('usuarios');
+Route::get('/usuario-crear', [App\Http\Controllers\UserController::class, 'create'])->name('usuarios-create');
 
 Route::get('send-email', function(){
 $mailData = [

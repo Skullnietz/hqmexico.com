@@ -36,4 +36,10 @@ class UserController extends Controller
         return $activo == 1 ? 'Usuario eliminado' : 'Usuario restaurado';
 
     }
+
+    public function create(){
+
+        return view('usuarios.create');
+
+    }
 }
