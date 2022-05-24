@@ -25,6 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/changepassword', [App\Http\Controllers\HomeController::class, 'changePassword'])->name('changepassword');
 Route::post('/updatepassword', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatepassword');
 
+Route::get('/usuarios', [App\Http\Controllers\UserController::class, 'index'])->name('usuarios');
+
 Route::get('send-email', function(){
 $mailData = [
     "name" => "Test NAME",

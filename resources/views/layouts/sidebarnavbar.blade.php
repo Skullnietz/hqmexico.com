@@ -57,7 +57,7 @@
         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
           <i class="far fa-user"></i>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right show" style="left: inherit; right: 0px;">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
           <span class="dropdown-item dropdown-header">Opciones de Sesión</span>
           <div class="dropdown-divider"></div>
           <a href="{{ route('changepassword') }}" class="dropdown-item">
@@ -195,7 +195,7 @@
 
           <li class="nav-header">ADMINISTRACIÓN</li>
           <li class="nav-item">
-            <a href="../calendar.html" class="nav-link @yield('UsuariosActive')">
+            <a href="/usuarios" class="nav-link @yield('UsuariosActive')">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Usuarios

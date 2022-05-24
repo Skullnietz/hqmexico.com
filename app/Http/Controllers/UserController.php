@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index(){
-        return \DB::table('users')->select('name', 'email', 'created_at')->get();
+        $usuarios =\DB::table('users')->select('name', 'email','activo', 'created_at')->get();
+        return view('usuarios.index')->with('usuarios',$usuarios);
     }
 
     public function show($id){
@@ -33,6 +34,6 @@ class UserController extends Controller
                 'activo' => $activo == 1 ? 0 : 1
             ]);
         return $activo == 1 ? 'Usuario eliminado' : 'Usuario restaurado';
-        
+
     }
 }
