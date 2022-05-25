@@ -11,6 +11,11 @@ class UserController extends Controller
         return view('usuarios.index')->with('usuarios',$usuarios);
     }
 
+    public function userList(){
+        $usuarios =\DB::table('users')->select('id', 'name', 'email','activo', 'created_at')->get();
+        return json_encode(array(['data' => $usuarios]));
+    }
+
     public function show($id){
         return (\DB::table('users')->select('name', 'email', 'created_at')->where('id', $id)->get())[0];
     }
@@ -30,10 +35,19 @@ class UserController extends Controller
         $activo = (\DB::table('users')->where('id', $id)->select('activo')->get())[0]->activo;
 
         $user = \DB::table('users')->where('id', $id)
+            ->delete();
+        return array(['deleted' => true]);
+
+    }
+
+    public function setActivo($id){
+        $activo = (\DB::table('users')->where('id', $id)->select('activo')->get())[0]->activo;
+
+        $user = \DB::table('users')->where('id', $id)
             ->update([
                 'activo' => $activo == 1 ? 0 : 1
             ]);
-        return $activo == 1 ? 'Usuario eliminado' : 'Usuario restaurado';
+        return array($activo == 1 ? ['activo' => 'eliminado'] : ['activo' => 'autorizado']);
 
     }
 

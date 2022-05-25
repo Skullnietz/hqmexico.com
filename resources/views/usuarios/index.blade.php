@@ -61,27 +61,9 @@ active
                               <th scope="col">Acciones</th>
                             </tr>
                           </thead>
-                          <tbody>
-                              <?php $i=1 ?>
-                        @foreach ($usuarios as $usuario)
-                        <tr>
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$usuario->name}}</td>
-                            <td>{{$usuario->email}}</td>
-                            <td>@if ($usuario->activo == 1)
-                                <a class="btn btn-xs btn-danger" href=""><i class="fas fa-door-closed"></i></i> Denegar </a>
-                                @else
-                                <a class="btn btn-xs btn-success" href=""><i class="fas fa-door-open"></i> Aceptar </a>
-                            @endif
-                        </td>
-                        <td>
-                            <a class="btn btn-xs btn-primary" href=""><i class="fas fa-user-edit"></i> Editar </a>
-                            <a class="btn btn-xs btn-warning" href=""><i class="fas fa-user-times"></i> Borrar </a>
-                        </td>
-                          </tr><?php $i++ ?>
-
-                        @endforeach
-                        </tbody>
+                          <tbody id="table-body">
+                              
+                          </tbody>
                     </table>
 
                 </div>
@@ -108,4 +90,62 @@ active
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<script>
+  const userIndexTable = ()=>{
+    let tableBody = document.querySelector('#table-body');
+    fetch("{{ route('userindex') }}")
+      .then((response)=>response.json())
+      .then((info)=>{
+        let data = info[0].data;
+        console.table(data);
+        data.forEach((element)=>{
+          let tableRow = document.createElement('tr');
+          tableRow.setAttribute('id', `tr-${element.id}`);
+          let id = `<th scope="row">${element.id}</th>`;
+          let nombre = `<td>${element.name}</td>`;
+          let email = `<td>${element.email}</td>`;
+          let accesoButton = element.activo == 1 ? 
+                `<td><a id="access-button-${element.id}" class="btn btn-xs btn-danger" href=""><i class="fas fa-door-closed"></i></i> Denegar </a></td>` :
+                `<td><a id="access-button-${element.id}" class="btn btn-xs btn-success" href=""><i class="fas fa-door-open"></i> Aceptar </a></td>`;
+          let actionsButton = `<td><a id="editar-button-${element.id}" class="btn btn-xs btn-primary" href=""><i class="fas fa-user-edit"></i> Editar </a>
+                               <a id="eliminar-button-${element.id}" class="btn btn-xs btn-warning" href=""><i class="fas fa-user-times"></i> Borrar </a></td>`;
+          tableRow.innerHTML= id+nombre+email+accesoButton+actionsButton;
+          tableBody.appendChild(tableRow);
+
+
+          document.querySelector(`#access-button-${element.id}`).addEventListener('click', (event)=>{
+            event.preventDefault();
+            fetch(`../usersetactivo/${element.id}`)
+              .then((response)=>response.json())
+              .then(response=>{
+                if(response[0].activo == 'eliminado'){
+                  document.querySelector(`#access-button-${element.id}`).className = 'btn btn-xs btn-success';
+                  document.querySelector(`#access-button-${element.id}`).innerHTML = '<i class="fas fa-door-open"></i> Aceptar';
+                }else{
+                  document.querySelector(`#access-button-${element.id}`).className = 'btn btn-xs btn-danger';
+                  document.querySelector(`#access-button-${element.id}`).innerHTML = '<i class="fas fa-door-closed"></i></i> Denegar';
+                }
+              });
+          });
+          document.querySelector(`#editar-button-${element.id}`).addEventListener('click', (event)=>{
+            event.preventDefault();
+            console.log('Boton de editar');
+          });
+          document.querySelector(`#eliminar-button-${element.id}`).addEventListener('click', (event)=>{
+            event.preventDefault();
+            fetch(`../userdelete/${element.id}`)
+              .then((response)=>response.json())
+              .then((response)=>{
+                if(response[0].deleted == true){
+                  document.querySelector('#table-body').removeChild(document.querySelector(`#tr-${element.id}`));
+                }
+              })
+          });
+
+        });
+      }); 
+  }
+  userIndexTable();
+</script>
 @endsection

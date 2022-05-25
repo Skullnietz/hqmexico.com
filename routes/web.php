@@ -39,10 +39,11 @@ dd("Mail Sent Successfuly!");
 
 
 // * Rutas para los usuarios
-Route::GET('/userindex', [App\Http\Controllers\UserController::class, 'index'])->name('userindex');
+Route::GET('/userindex', [App\Http\Controllers\UserController::class, 'userList'])->name('userindex');
 Route::GET('/usershow/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('usershow');
 Route::POST('/userupdate/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('userupdate');
 Route::GET('/userdelete/{id}', [App\Http\Controllers\UserController::class, 'delete'])->name('userdelete');
+Route::GET('/usersetactivo/{id}', [App\Http\Controllers\UserController::class, 'setActivo'])->name('usersetactivo');
 
 // * Rutas para el newsletter
 Route::GET('/newsletterindex', [App\Http\Controllers\NewsletterController::class, 'index'])->name('newsletterindex');
