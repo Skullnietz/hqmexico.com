@@ -3,57 +3,92 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index(){
-        $usuarios =\DB::table('users')->select('name', 'email','activo', 'created_at')->get();
-        return view('usuarios.index')->with('usuarios',$usuarios);
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            $usuarios =\DB::table('users')->select('name', 'email','activo', 'created_at')->get();
+            return view('usuarios.index')->with('usuarios',$usuarios);
+        }else{
+            return redirect(route('login'));
+        }
     }
 
     public function userList(){
-        $usuarios =\DB::table('users')->select('id', 'name', 'email','activo', 'created_at')->get();
-        return json_encode(array(['data' => $usuarios]));
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            $usuarios =\DB::table('users')->select('id', 'name', 'email','activo', 'created_at')->get();
+            return json_encode(array(['data' => $usuarios]));
+        }else{
+            return redirect(route('login'));
+        }
     }
 
     public function show($id){
-        return (\DB::table('users')->select('name', 'email', 'created_at')->where('id', $id)->get())[0];
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            return (\DB::table('users')->select('name', 'email', 'created_at')->where('id', $id)->get())[0];
+        }else{
+            return redirect(route('login'));
+        }
     }
 
     public function update(Request $request, $id){
-        $user = \DB::table('users')->where('id', $id)
-            ->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'updated_at' => date('Y-m-d h:i:s')
-            ]);
-        return 'Usuario actualizado';
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            $user = \DB::table('users')->where('id', $id)
+                ->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                    'updated_at' => date('Y-m-d h:i:s')
+                ]);
+            return 'Usuario actualizado';
+        }else{
+            return redirect(route('login'));
+        }
     }
 
     public function delete($id){
-        $activo = (\DB::table('users')->where('id', $id)->select('activo')->get())[0]->activo;
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            $activo = (\DB::table('users')->where('id', $id)->select('activo')->get())[0]->activo;
 
-        $user = \DB::table('users')->where('id', $id)
-            ->delete();
-        return array(['deleted' => true]);
+            $user = \DB::table('users')->where('id', $id)
+                ->delete();
+            return array(['deleted' => true]);
+        }else{
+            return redirect(route('login'));
+        }
 
     }
 
     public function setActivo($id){
-        $activo = (\DB::table('users')->where('id', $id)->select('activo')->get())[0]->activo;
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            $activo = (\DB::table('users')->where('id', $id)->select('activo')->get())[0]->activo;
 
-        $user = \DB::table('users')->where('id', $id)
-            ->update([
-                'activo' => $activo == 1 ? 0 : 1
-            ]);
-        return array($activo == 1 ? ['activo' => 'eliminado'] : ['activo' => 'autorizado']);
+            $user = \DB::table('users')->where('id', $id)
+                ->update([
+                    'activo' => $activo == 1 ? 0 : 1
+                ]);
+            return array($activo == 1 ? ['activo' => 'eliminado'] : ['activo' => 'autorizado']);
+        }else{
+            return redirect(route('login'));
+        }
 
     }
 
     public function create(){
-
-        return view('usuarios.create');
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            return view('usuarios.create');
+        }else{
+            return redirect(route('login'));
+        }
 
     }
 }

@@ -54,3 +54,12 @@ Route::GET('/newsletterdelete/{id}', [App\Http\Controllers\NewsletterController:
 Route::GET('/newsletterverificar/{id}', [App\Http\Controllers\NewsletterController::class, 'verificar'])->name('newsletterverificar');
 
 Route::get('/newsletter/create', function(){return view('newsletter.create');});
+
+// * Rutas para los productos
+Route::group(['prefix' => 'productos'], function(){
+    Route::GET('index', [App\Http\Controllers\ProductosController::class, 'index'])->name('productosindex');
+    Route::GET('show/{id}', [App\Http\Controllers\ProductosController::class, 'show'])->name('productosshow');
+    Route::POST('store', [App\Http\Controllers\ProductosController::class, 'store'])->name('productosstore');
+    Route::POST('update/{id}', [App\Http\Controllers\ProductosController::class, 'update'])->name('productosupdate');
+    Route::POST('delete/{id}', [App\Http\Controllers\ProductosController::class, 'delete'])->name('productosdelete');
+});
