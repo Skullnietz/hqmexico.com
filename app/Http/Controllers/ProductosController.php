@@ -27,6 +27,19 @@ class ProductosController extends Controller
         }
     }
 
+    public function search($input){
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            $productos = \DB::table('productos')
+                ->where('title', 'like', '%'.$input.'%')
+                ->select('id', 'title', 'sku', 'img', 'replace_num','seccion','categoria')
+                ->get();
+            return json_encode(array(['data' => $productos]));
+        }else{
+            return redirect(route('login'));
+        }
+    }
+
     public function show($id){
         $user = Auth::user() == null ? false: true;
         if($user){

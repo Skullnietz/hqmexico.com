@@ -51,8 +51,8 @@ active
             <!-- /.card-header -->
             <div class="card-body">
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar producto" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                    <input class="form-control mr-sm-2" id="search-input" type="search" placeholder="Buscar producto" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit">Buscar</button>
                   </form><br>
                 <div style="overflow-x:auto;">
                     <table class="table">
@@ -99,13 +99,13 @@ active
 <!-- /.content-wrapper -->
 
 <script>
-  const productIndexTable = ()=>{
+  const productIndexTable = (search_path)=>{
     let tableBody = document.querySelector('#table-body');
-    fetch("{{ route('productosindex') }}")
+    fetch(search_path)
       .then((response)=>response.json())
       .then((info)=>{
         let data = info[0].data;
-        console.table(data);
+        tableBody.innerHTML = "";
         data.forEach((element)=>{
           let tableRow = document.createElement('tr');
           tableRow.setAttribute('id', `tr-${element.id}`);
@@ -115,23 +115,15 @@ active
           let title = `<td>${element.title}</td>`;
           let sku = `<td>${element.sku}</td>`;
           let img = `<td><img class="img-thumbnail" width="100px" src="${element.img}"></td>`;
-          let replace_num = `<td>${element.replace_num}</td>`;
-          let actionsButton = `<td><a id="editar-button-${element.id}" class="btn btn-xs btn-primary" href=""><i class="fas fa-edit"></i> Editar </a>
+          let replace_num = element.replace_num == null ? `<td></td>`: `<td>${element.replace_num}</td>`;
+          let actionsButton = `<td><a id="editar-button-${element.id}" class="btn btn-xs btn-primary" href="../productos/show/${element.id}"><i class="fas fa-edit"></i> Editar </a>
                                <a id="eliminar-button-${element.id}" class="btn btn-xs btn-warning" href=""><i class="fas fa-minus-circle"></i> Borrar </a></td>`;
           tableRow.innerHTML= id+seccion+categoria+title+sku+img+replace_num+actionsButton;
           tableBody.appendChild(tableRow);
 
-
-
-
-          <!-- ! Faltan el boton de editar -->
-          document.querySelector(`#editar-button-${element.id}`).addEventListener('click', (event)=>{
-            event.preventDefault();
-            console.log('Boton de editar');
-          });
           document.querySelector(`#eliminar-button-${element.id}`).addEventListener('click', (event)=>{
             event.preventDefault();
-            fetch(`../userdelete/${element.id}`)
+            fetch(`../productos/delete/${element.id}`)
               .then((response)=>response.json())
               .then((response)=>{
                 if(response[0].deleted == true){
@@ -143,6 +135,16 @@ active
         });
       });
   }
-  productIndexTable();
+  const search = ()=>{
+    let searchInput = document.querySelector('#search-input');
+    let searchButton = document.querySelector('#search-button');
+    searchButton.addEventListener('click', (e)=>{
+      e.preventDefault();
+      let search_path = searchInput.value != "" ? `../productos/search/${searchInput.value}`: "{{ route('productosindex') }}";
+      productIndexTable(search_path);
+    });
+  };
+  productIndexTable("{{ route('productosindex') }}");
+  search();
 </script>
 @endsection
