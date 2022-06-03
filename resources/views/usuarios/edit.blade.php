@@ -50,7 +50,12 @@ active
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form method="POST" action="{{ route('register') }}">
+                @if(isset($mensaje))
+                <div class="col-md-12">
+                  {{$mensaje}}
+                </div>
+                @endif
+                <form method="POST" action="{{ route('userupdate', ['id'=>$usuario[0]->id]) }}">
                     @csrf
 
                     <div class="row mb-3">

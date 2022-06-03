@@ -32,6 +32,10 @@ class ProductosController extends Controller
         if($user){
             $productos = \DB::table('productos')
                 ->where('title', 'like', '%'.$input.'%')
+                ->orWhere('sku', 'like', '%'.$input.'%')
+                ->orWhere('replace_num', 'like', '%'.$input.'%')
+                ->orWhere('seccion', 'like', '%'.$input.'%')
+                ->orWhere('categoria', 'like', '%'.$input.'%')
                 ->select('id', 'title', 'sku', 'img', 'replace_num','seccion','categoria')
                 ->get();
             return json_encode(array(['data' => $productos]));

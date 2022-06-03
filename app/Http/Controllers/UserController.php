@@ -30,8 +30,9 @@ class UserController extends Controller
     public function show($id){
         $user = Auth::user() == null ? false: true;
         if($user){
-            $usuario = (\DB::table('users')->select('name', 'email', 'created_at')->where('id', $id)->get());
-            return view('usuarios.edit')->with('usuario',$usuario);
+            $usuario = (\DB::table('users')->select('id', 'name', 'email', 'created_at')->where('id', $id)->get());
+            return view('usuarios.edit')
+                ->with('usuario',$usuario);
         }else{
             return redirect(route('login'));
         }
@@ -44,10 +45,10 @@ class UserController extends Controller
                 ->update([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'password' => bcrypt($request->password),
                     'updated_at' => date('Y-m-d h:i:s')
                 ]);
-            return 'Usuario actualizado';
+            $user = (\DB::table('users')->select('name', 'email', 'created_at')->where('id', $id)->get());
+            return redirect(route('usershow', ['id'=>$id]));
         }else{
             return redirect(route('login'));
         }
