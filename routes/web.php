@@ -42,6 +42,7 @@ Route::GET('/usershow/{id}', [App\Http\Controllers\UserController::class, 'show'
 Route::POST('/userupdate/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('userupdate');
 Route::GET('/userdelete/{id}', [App\Http\Controllers\UserController::class, 'delete'])->name('userdelete');
 Route::GET('/usersetactivo/{id}', [App\Http\Controllers\UserController::class, 'setActivo'])->name('usersetactivo');
+Route::GET('/updatepassword/{id}', [App\Http\Controllers\UserController::class, 'newPassword'])->name('updatepassword');
 
 // * Rutas para el newsletter
 Route::GET('/newsletterindex', [App\Http\Controllers\NewsletterController::class, 'index'])->name('newsletterindex');

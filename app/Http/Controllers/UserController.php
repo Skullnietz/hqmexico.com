@@ -93,4 +93,25 @@ class UserController extends Controller
         }
 
     }
+
+    public function newPassword(Request $request, $id){
+        $user = \DB::table('users')->where('id', $id)->select('password')->get();
+        $request->validate([
+            'password' => 'required|string',
+            'new_password' => 'required|string',
+            'conf_password' => 'required|string|same:new_password'
+        ]);
+        //return $user[0]->password;
+        if(Hash::check($request->password, $user[0]->password)){
+            $user = \DB::table('users')
+                ->where('id', $id)
+                ->update([
+                    'password' => bcrypt($request->new_password),
+                    'updated_at' => date('Y-m-d h:i:s')
+                ]);
+            return array(['updated' => true]);
+        }else{
+            return array(['updated' => true]);
+        }
+    }
 }

@@ -123,11 +123,11 @@ active
                         </div>
                     @endif
 
-                    <form action="{{ route('updatepassword')}}" method="POST">
+                    <form action="{{ route('updatepassword', ['id'=>$usuario[0]->id])}}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="formGroupExampleInput">Contaseña Actual</label>
-                            <input type="text" name="contraseña" class="form-control" id="formGroupExampleInput" placeholder="Contaseña Actual" @error('contraseña') is-invalid @enderror>
+                            <input type="text" name="password" class="form-control" id="formGroupExampleInput" placeholder="Contaseña Actual" @error('contraseña') is-invalid @enderror>
                             @error('contraseña')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -135,19 +135,32 @@ active
                         </div><br>
                         <div class="form-group">
                           <label for="formGroupExampleInput">Nueva Contraseña</label>
-                          <input type="text" name="nueva_contraseña" class="form-control" id="formGroupExampleInput" placeholder="Nueva Contraseña">
+                          <input type="text" name="new_password" class="form-control" id="formGroupExampleInput" placeholder="Nueva Contraseña">
                           @error('nueva_contraseña')
                           <span class="text-danger">{{ $message }}</span>
                           @enderror
                         </div><br>
                         <div class="form-group">
                           <label for="formGroupExampleInput2">Confirmar Nueva Contraseña</label>
-                          <input type="text" name="nueva_contraseña_confirmation" class="form-control" id="formGroupExampleInput2" placeholder="Confirmar Nueva Contraseña">
+                          <input type="text" name="conf_password" class="form-control" id="formGroupExampleInput2" placeholder="Confirmar Nueva Contraseña">
                         </div>
                         <div><br>
-                            <center><button class="btn btn-success"  type="submit"> Cambiar contraseña</button></center>
+                            <center><button class="btn btn-success" id="change_pass_button" type="submit"> Cambiar contraseña</button></center>
                         </div>
-
+                        <script>
+                          document.querySelector('#change_pass_button').addEventListener('click', (e)=>{
+                            e.preventDefault();
+                            fetch('../updatepassword/{{$usuario[0]->id}}')
+                              .then((response)=>response.json())
+                              .then((response)=>{
+                                if(response[0].updated == true){
+                                  alert('contraseña actualizada correctamente');
+                                }else{
+                                  alert('Por favor verifica tu contraseña');
+                                }
+                              });
+                          });
+                        </script>
                       </form>
                 </div>
             </div>
