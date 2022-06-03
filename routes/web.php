@@ -15,9 +15,7 @@ use App\Mail\TestEmail;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [App\Http\Controllers\InicioController::class, 'index'])->name('inicio');
 
 Auth::routes();
 
