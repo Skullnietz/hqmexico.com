@@ -203,7 +203,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="../calendar.html" class="nav-link @yield('ProductosActive')">
+            <a href="/productos/indexview" class="nav-link @yield('ProductosActive')">
               <i class="nav-icon fab fa-product-hunt"></i>
               <p>
                 Productos
