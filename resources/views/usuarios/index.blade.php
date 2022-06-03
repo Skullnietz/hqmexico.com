@@ -128,6 +128,8 @@ active
                 }
               });
           });
+
+          <!-- ! Faltan el boton de editar -->
           document.querySelector(`#editar-button-${element.id}`).addEventListener('click', (event)=>{
             event.preventDefault();
             console.log('Boton de editar');
