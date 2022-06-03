@@ -10,7 +10,18 @@ class ProductosController extends Controller
     public function index(){
         $user = Auth::user() == null ? false: true;
         if($user){
-            return \DB::table('productos')->select('id', 'title', 'sku', 'img', 'replace_num')->where('activo', 1)->get();
+            $productos = \DB::table('productos')->select('id', 'title', 'sku', 'img', 'replace_num','seccion','categoria')->where('activo', 1)->get();
+            return json_encode(array(['data' => $productos]));
+        }else{
+            return redirect(route('login'));
+        }
+    }
+
+    public function Productoslist(){
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            return  view('productos.index');
+
         }else{
             return redirect(route('login'));
         }
