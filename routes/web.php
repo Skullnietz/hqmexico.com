@@ -57,6 +57,7 @@ Route::get('/newsletter/create', function(){return view('newsletter.create');});
 Route::group(['prefix' => 'productos'], function(){
     Route::GET('indexview', [App\Http\Controllers\ProductosController::class, 'Productoslist'])->name('productosindexview');
     Route::GET('index', [App\Http\Controllers\ProductosController::class, 'index'])->name('productosindex');
+    Route::GET('create', [App\Http\Controllers\ProductosController::class, 'create'])->name('productoscreate');
     Route::GET('show/{id}', [App\Http\Controllers\ProductosController::class, 'show'])->name('productosshow');
     Route::POST('store', [App\Http\Controllers\ProductosController::class, 'store'])->name('productosstore');
     Route::POST('update/{id}', [App\Http\Controllers\ProductosController::class, 'update'])->name('productosupdate');

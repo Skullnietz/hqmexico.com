@@ -35,6 +35,14 @@ class ProductosController extends Controller
             return redirect(route('login'));
         }
     }
+    public function create(){
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            return view('productos.create');
+        }else{
+            return redirect(route('login'));
+        }
+    }
     public function store(Request $request){
         $user = Auth::user() == null ? false: true;
         if($user){
