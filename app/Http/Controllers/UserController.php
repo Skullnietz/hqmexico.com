@@ -30,7 +30,8 @@ class UserController extends Controller
     public function show($id){
         $user = Auth::user() == null ? false: true;
         if($user){
-            return (\DB::table('users')->select('name', 'email', 'created_at')->where('id', $id)->get())[0];
+            $usuario = (\DB::table('users')->select('name', 'email', 'created_at')->where('id', $id)->get());
+            return view('usuarios.edit')->with('usuario',$usuario);
         }else{
             return redirect(route('login'));
         }

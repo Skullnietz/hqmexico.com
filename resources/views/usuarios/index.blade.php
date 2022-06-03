@@ -62,7 +62,7 @@ active
                             </tr>
                           </thead>
                           <tbody id="table-body">
-                              
+
                           </tbody>
                     </table>
 
@@ -105,10 +105,10 @@ active
           let id = `<th scope="row">${element.id}</th>`;
           let nombre = `<td>${element.name}</td>`;
           let email = `<td>${element.email}</td>`;
-          let accesoButton = element.activo == 1 ? 
+          let accesoButton = element.activo == 1 ?
                 `<td><a id="access-button-${element.id}" class="btn btn-xs btn-danger" href=""><i class="fas fa-door-closed"></i></i> Denegar </a></td>` :
                 `<td><a id="access-button-${element.id}" class="btn btn-xs btn-success" href=""><i class="fas fa-door-open"></i> Aceptar </a></td>`;
-          let actionsButton = `<td><a id="editar-button-${element.id}" class="btn btn-xs btn-primary" href=""><i class="fas fa-user-edit"></i> Editar </a>
+          let actionsButton = `<td><a href="/usershow/${element.id}" class="btn btn-xs btn-primary" href=""><i class="fas fa-user-edit"></i> Editar </a>
                                <a id="eliminar-button-${element.id}" class="btn btn-xs btn-warning" href=""><i class="fas fa-user-times"></i> Borrar </a></td>`;
           tableRow.innerHTML= id+nombre+email+accesoButton+actionsButton;
           tableBody.appendChild(tableRow);
@@ -129,11 +129,7 @@ active
               });
           });
 
-          <!-- ! Faltan el boton de editar -->
-          document.querySelector(`#editar-button-${element.id}`).addEventListener('click', (event)=>{
-            event.preventDefault();
-            console.log('Boton de editar');
-          });
+
           document.querySelector(`#eliminar-button-${element.id}`).addEventListener('click', (event)=>{
             event.preventDefault();
             fetch(`../userdelete/${element.id}`)
@@ -146,7 +142,7 @@ active
           });
 
         });
-      }); 
+      });
   }
   userIndexTable();
 </script>

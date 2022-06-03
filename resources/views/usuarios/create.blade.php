@@ -34,7 +34,7 @@ active
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h5 class="card-title">Lista de usaurios</h5>
+              <h5 class="card-title">Formulario de creación de usuarios</h5>
 
 
 
