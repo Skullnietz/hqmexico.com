@@ -170,7 +170,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../layout/boxed.html" class="nav-link @yield('ProductosCatalogoActive')">
+                <a href="/productos/indexview" class="nav-link @yield('ProductosCatalogoActive')">
                   <i class="nav-icon far fa-image"></i>
                   <p>Productos</p>
                 </a>
