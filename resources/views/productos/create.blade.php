@@ -104,17 +104,17 @@ active
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ route('productosstore') }}">
                     @csrf
                     <div class="row">
                     <div class="col ">
                     <div class="row mb-1">
-                        <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nombre') }}</label>
+                        <label for="title" class="col-md-4 col-form-label text-md-end">{{ __('Nombre') }}</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                            <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus>
 
-                            @error('name')
+                            @error('title')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -123,12 +123,12 @@ active
                     </div>
 
                     <div class="row mb-1">
-                        <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('SKU ') }}</label>
+                        <label for="sku" class="col-md-4 col-form-label text-md-end">{{ __('SKU ') }}</label>
 
                         <div class="col-md-6">
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                            <input id="sku" type="sku" class="form-control @error('sku') is-invalid @enderror" name="sku" value="{{ old('sku') }}" required autocomplete="sku">
 
-                            @error('email')
+                            @error('sku')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -140,9 +140,9 @@ active
                         <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Replace Num') }}</label>
 
                         <div class="col-md-6">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                            <input id="replace_num" type="text" class="form-control @error('replace_num') is-invalid @enderror" name="replace_num" required autocomplete="replace_num">
 
-                            @error('password')
+                            @error('replace_num')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -151,24 +151,18 @@ active
                     </div>
 
                     <div class="row mb-1">
-                            <label class="col-md-4 col-form-label text-md-end" for="exampleFormControlSelect1">Seccion</label>
+                            <label class="col-md-4 col-form-label text-md-end" for="seccion">Seccion</label>
 
                             <div class="col-md-6">
-                            <select class="form-control" id="exampleFormControlSelect1">
-                              <option>Consumibles GSE</option>
-                              <option>Consumibles Aviacion</option>
-
-                            </select>
+                            <input type="text" name="categoria" id="" value="Consumibles_GSE">
                         </div>
 
                     </div>
                     <div class="row mb-1">
-                        <label class="col-md-4 col-form-label text-md-end" for="exampleFormControlSelect1">Categoria</label>
+                        <label class="col-md-4 col-form-label text-md-end" for="categoria">Categoria</label>
 
                         <div class="col-md-6">
-                        <select class="form-control" id="exampleFormControlSelect1">
-                          <option>Seleccione una seccion</option>
-                        </select>
+                        <input type="text" name="seccion" id="" value="Tractores">
                     </div>
                 </div><br>
             </div>
@@ -180,7 +174,7 @@ active
                         <header>Drag & Drop to Upload File</header>
                         <span>OR</span>
                         <button>Browse File</button>
-                        <input type="file" hidden>
+                        <input name="img" type="file" hidden>
                       </div></div></div>
 
                 </div>

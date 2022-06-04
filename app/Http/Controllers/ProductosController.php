@@ -60,23 +60,45 @@ class ProductosController extends Controller
             return redirect(route('login'));
         }
     }
+
     public function store(Request $request){
+        
         $user = Auth::user() == null ? false: true;
         if($user){
+            $img_storage_path = "";
+            if($request->file('img') != ""){
+                $file = $request->file('img');
+                $sections = (\DB::table('secciones')->select('nombre', 'id_categoria')->where('nombre', $request->seccion)->get())[0];
+                $seccion_list = \DB::table('secciones')->select('nombre')->where('id_categoria', $sections->id_categoria)->get();
+                $countable_sections = [];
+                foreach($seccion_list as $section){
+                    array_push($countable_sections, $section->nombre);
+                }
+                $clave = array_search($sections->nombre, $countable_sections);
+                $categoria = (\DB::Table('categorias')->select('nombre')->where('id', $sections->id_categoria)->get())[0];
+
+                $img_storage_path = "/".str_replace(" ","_",$categoria->nombre)."/".strval($clave+1)."_".str_replace(" ", "_", $sections->nombre)."/".$file->getClientOriginalName().".".$file->extension();
+                return $img_storage_path;
+            }
+
             $producto = \DB::table('productos')->insert([
                 'title' => $request->title,
                 'sku' => $request->sku,
-                'replace_num' => $request->replace->num,
+                'replace_num' => $request->replace_num,
                 'servicio' => $request->servicio == null ? 0 : $request->servicio,
                 'activo' => $request->activo == null ? 1 : $request->activo,
-                'img' => $request->img,
-                'page' => $request->page,
-                'fila' => $request->fila,
+                'img' => $img_storage_path,
                 'seccion' => $request->seccion,
-                'categoria' => $request->categoria,
-                'orden_interno' => $request->orden_interno,
+                'categoria' => $request->categoria
             ]);
-            return 'Registro realizado';
+            
+            
+
+            if($request->file('foto1') != ''){
+                $file = $request->file('img');
+                \Storage::disk('local')->put($img_storage_path, \File::get($file));
+            }
+            return redirect()->back();
         }else{
             return redirect(route('login'));
         }
