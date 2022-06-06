@@ -55,20 +55,32 @@ class ProductosController extends Controller
     public function create(){
         $user = Auth::user() == null ? false: true;
         if($user){
-            return view('productos.create');
+            //$categorias = \DB::table('secciones')->select('id', 'nombre')->get();
+            $secciones = \DB::table('categorias')->select('id', 'nombre')->get();
+            return view('productos.create')
+                //->with('categorias', $categorias)
+                ->with('secciones', $secciones);
         }else{
             return redirect(route('login'));
         }
+    }
+
+    public function getCategorias(){
+        $categorias = \DB::table('secciones')->select(\DB::raw('id, nombre, id_categoria as id_seccion'))->get();
+        return response($categorias, 200)
+            ->header('Content-Type', 'application/json');
     }
 
     public function store(Request $request){
         
         $user = Auth::user() == null ? false: true;
         if($user){
+
+            // ! Esta omitiendo el if pq la imagen va vacia 
             $img_storage_path = "";
             if($request->file('img') != ""){
                 $file = $request->file('img');
-                $sections = (\DB::table('secciones')->select('nombre', 'id_categoria')->where('nombre', $request->seccion)->get())[0];
+                $sections = (\DB::table('secciones')->select('nombre', 'id_categoria')->where('id', $request->seccion)->get())[0];
                 $seccion_list = \DB::table('secciones')->select('nombre')->where('id_categoria', $sections->id_categoria)->get();
                 $countable_sections = [];
                 foreach($seccion_list as $section){
@@ -77,8 +89,8 @@ class ProductosController extends Controller
                 $clave = array_search($sections->nombre, $countable_sections);
                 $categoria = (\DB::Table('categorias')->select('nombre')->where('id', $sections->id_categoria)->get())[0];
 
-                $img_storage_path = "/".str_replace(" ","_",$categoria->nombre)."/".strval($clave+1)."_".str_replace(" ", "_", $sections->nombre)."/".$file->getClientOriginalName().".".$file->extension();
-                return $img_storage_path;
+                $img_storage_path = "/productos/".str_replace(" ","_",$categoria->nombre)."/".strval($clave+1)."_".str_replace(" ", "_", $sections->nombre)."/".$file->getClientOriginalName();
+                //return $img_storage_path;
             }
 
             $producto = \DB::table('productos')->insert([
@@ -87,7 +99,8 @@ class ProductosController extends Controller
                 'replace_num' => $request->replace_num,
                 'servicio' => $request->servicio == null ? 0 : $request->servicio,
                 'activo' => $request->activo == null ? 1 : $request->activo,
-                'img' => $img_storage_path,
+                'orden_interno' => 0,
+                'img' => 'images'.$img_storage_path,
                 'seccion' => $request->seccion,
                 'categoria' => $request->categoria
             ]);

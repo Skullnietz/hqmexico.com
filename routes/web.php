@@ -64,4 +64,5 @@ Route::group(['prefix' => 'productos'], function(){
     Route::POST('update/{id}', [App\Http\Controllers\ProductosController::class, 'update'])->name('productosupdate');
     Route::POST('delete/{id}', [App\Http\Controllers\ProductosController::class, 'delete'])->name('productosdelete');
     Route::GET('search/{input}', [App\Http\Controllers\ProductosController::class, 'search'])->name('productossearch');
+    Route::GET('getCategorias', [App\Http\Controllers\ProductosController::class, 'getCategorias'])->name('productosgetcategorias');
 });
