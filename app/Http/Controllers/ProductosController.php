@@ -89,7 +89,7 @@ class ProductosController extends Controller
                 $clave = array_search($sections->nombre, $countable_sections);
                 $categoria = (\DB::Table('categorias')->select('nombre')->where('id', $sections->id_categoria)->get())[0];
 
-                $img_storage_path = "/productos/".str_replace(" ","_",$categoria->nombre)."/".strval($clave+1)."_".str_replace(" ", "_", $sections->nombre)."/".$file->getClientOriginalName();
+                $img_storage_path = "productos/".str_replace(" ","_",$categoria->nombre)."/".strval($clave+1)."_".str_replace(" ", "_", $sections->nombre)."/".$file->getClientOriginalName();
                 //return $img_storage_path;
             }
 
@@ -100,14 +100,14 @@ class ProductosController extends Controller
                 'servicio' => $request->servicio == null ? 0 : $request->servicio,
                 'activo' => $request->activo == null ? 1 : $request->activo,
                 'orden_interno' => 0,
-                'img' => 'images'.$img_storage_path,
+                'img' => $img_storage_path,
                 'seccion' => $request->seccion,
                 'categoria' => $request->categoria
             ]);
             
             
 
-            if($request->file('foto1') != ''){
+            if($request->file('img') != ''){
                 $file = $request->file('img');
                 \Storage::disk('local')->put($img_storage_path, \File::get($file));
             }
