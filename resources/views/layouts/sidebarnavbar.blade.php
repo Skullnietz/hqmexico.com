@@ -7,6 +7,8 @@
   <title>HandiQuip GSE</title>
 
   <!-- Google Font: Source Sans Pro -->
+  
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../backend/plugins/fontawesome-free/css/all.min.css">
@@ -158,13 +160,13 @@
                     </a>
                   </li>
               <li class="nav-item">
-                <a href="../layout/top-nav.html" class="nav-link @yield('SeccionesCatalogoActive')">
+                <a href="/catalogo/secciones" class="nav-link @yield('SeccionesCatalogoActive')">
                   <i class="fas fa-copy nav-icon"></i>
                   <p>Secciones</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../layout/top-nav-sidebar.html" class="nav-link @yield('CategoriasCatalogoActive')">
+                <a href="/catalogo/categorias" class="nav-link @yield('CategoriasCatalogoActive')">
                   <i class="fas fa-copy nav-icon"></i>
                   <p>Categorias</p>
                 </a>
@@ -203,7 +205,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/productos/indexview" class="nav-link @yield('ProductosActive')">
+            <a href="/productos" class="nav-link @yield('ProductosActive')">
               <i class="nav-icon fab fa-product-hunt"></i>
               <p>
                 Productos

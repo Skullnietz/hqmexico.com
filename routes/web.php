@@ -35,7 +35,14 @@ Mail::to("hello@example.com")->send(new TestEmail($mailData));
 dd("Mail Sent Successfuly!");
 });
 
-
+// * Rutas para Catalogo
+Route::GET('/catalogo', [App\Http\Controllers\CatalogoController::class, 'index'])->name('catalogo');
+Route::GET('/catalogo/categorias', [App\Http\Controllers\CatalogoController::class, 'categorias'])->name('categorias');
+Route::POST('/storecategorias', [App\Http\Controllers\CatalogoController::class, 'storecategorias'])->name('storecategorias');
+Route::GET('/catalogo/secciones', [App\Http\Controllers\CatalogoController::class, 'secciones'])->name('secciones');
+Route::GET('/deletesecciones/{seccion}', [App\Http\Controllers\CatalogoController::class, 'deletesecciones'])->name('deletesecciones');
+Route::GET('/deletecategorias/{categoria}', [App\Http\Controllers\CatalogoController::class, 'deletecategorias'])->name('deletecategorias');
+Route::POST('/storesecciones', [App\Http\Controllers\CatalogoController::class, 'storesecciones'])->name('storesecciones');
 // * Rutas para los usuarios
 Route::GET('/userindex', [App\Http\Controllers\UserController::class, 'userList'])->name('userindex');
 Route::GET('/usershow/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('usershow');

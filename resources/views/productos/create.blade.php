@@ -167,7 +167,7 @@ active
 
                         <div class="col-md-6">
                         <select class="form-control" name="categoria" id="categorias-select">
-                          
+
                         </select>
                     </div>
                 </div><br>
@@ -210,6 +210,59 @@ active
         <!-- /.col -->
       </div>
       <!-- /.row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Instrucciones de Inserción de imagenes </h5>
+
+
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <h5>Pasos para convetir a PNG</h5>
+                <ol>
+                    <li>
+                        Presiona este boton <br>  <a class="btn-sm btn-success" href="https://www.remove.bg/es/upload" target="_blank">Eliminar Fondo </a>
+                    </li>
+                    <li>
+                        Inserta la imagen del producto dentro de la pagina emergente.
+                    </li>
+                    <li>
+                        Espera a que devuelva el resultado.
+                    </li>
+                    <li>
+                        Descarga la Imagen.
+                    </li>
+                    <li>
+                        ¡Listo! Ya puedes ingresar el producto en este apartado.
+                    </li>
+                </ol>
+
+
+
+            </div>
+            <!-- ./card-body -->
+            <div class="card-footer">
+
+              <!-- /.row -->
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
 
       <!-- Main row -->
 
@@ -222,7 +275,7 @@ active
 <script>
 
   loadCategoriasOptions();
-  
+
   document.querySelector('#secciones-select').addEventListener('change', (e)=>{
     loadCategoriasOptions();
   });
@@ -262,7 +315,7 @@ button.onclick = (e)=>{
 input.addEventListener("change", function(e){
   //getting user select file and [0] this means if user select multiple files then we'll select only the first one
   file = this.files[0];
-  
+
   dropArea.classList.add("active");
   showFile(); //calling function
 });

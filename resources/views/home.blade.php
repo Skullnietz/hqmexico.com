@@ -34,7 +34,7 @@ active
             <div class="info-box-content">
               <span class="info-box-text">Productos</span>
               <span class="info-box-number">
-                1,902
+                {{$productos}}
 
               </span>
             </div>
