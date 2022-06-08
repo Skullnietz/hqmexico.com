@@ -26,15 +26,17 @@ class NewsletterController extends Controller
     }
 
     public function store(Request $request){
+
         $user = Auth::user() == null ? false: true;
         if($user){
+            
             $newsletter = \DB::table('newsletter')->insert([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
                 'created_at' => date('Y-m-d h:i:s')
             ]);
 
-            return 'Registro realizado';
+            return response("ok", 200);
         }else{
             return redirect(route('login'));
         }

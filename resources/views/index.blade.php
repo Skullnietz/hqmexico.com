@@ -807,27 +807,56 @@ Licence URI: https://www.os-templates.com/template-terms
 <!-- ################################################################################################ -->
 <div id="myModal" class="modal">
 
-    <!-- Modal content -->
+    <!-- * Modal para el newsletter -->
     <div class="modal-content form-style-9">
       <span class="close">&times;</span>
-      <form class="">
+      <form class="" action="{{ route('newsletterstore') }}" method="post">
+        @csrf
          <center><h3>Newsletter</h3>
          <p>Reciba actualizaciones de nuestras promociones y notificaciones de nuestros servicios </p></center>
         <ul>
         <li>
         Nombre
-        <input type="text" name="field3" class="field-style field-full align-none" placeholder="Nombre" />
+        <input type="text" name="nombre" id="newsletter-name-input" class="field-style field-full align-none" placeholder="Nombre" />
         </li>
         <li>
         Correo Elecrónico
-        <input type="email" name="field3" class="field-style field-full align-none" placeholder="Email" />
+        <input type="email" name="email" id="newsletter-email-input" class="field-style field-full align-none" placeholder="Email" />
         </li>
         <li>
-            <center><input type="submit" value="Suscribirme" /></center>
+            <center><input type="submit" id="newsletter-submit-button" value="Suscribirme" /></center>
         </li>
         </ul>
     </div>
-
+    <meta name="csrf-token" content="{{csrf_token()}}">
+    
+    <script>
+      document.querySelector('#newsletter-submit-button')
+        .addEventListener('click', (e)=>{
+          e.preventDefault();
+          enviar();
+      });
+      function enviar(){
+        let data = new FormData();
+        data.append('nombre', document.querySelector('#newsletter-name-input').value);
+        data.append('email', document.querySelector('#newsletter-email-input').value);
+        data.append('_token', '{{ csrf_token() }}')
+        
+        fetch('{{ route("newsletterstore") }}',{
+          headers: new Headers({
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+          }), 
+          method: 'POST',
+          body: data, 
+        }).then((response)=>{
+          if(response.ok){
+            alert("Registro realizado!");
+          }else{
+            alert("Ocurrio un error :(")
+          }
+        });
+      }
+    </script>
   </div>
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
