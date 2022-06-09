@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Models\User;
 use App\Models\Categoria;
 use App\Models\Seccion;
@@ -25,6 +27,7 @@ class CatalogoController extends Controller
 
     public function storecategorias(Request $request){
 
+
         $request->validate([
             'nombre' => 'required',
             'id_categoria' => 'required',
@@ -33,8 +36,19 @@ class CatalogoController extends Controller
         $categoria = new categoria();
         $categoria-> nombre = $request->nombre;
         $categoria-> id_categoria = $request->id_categoria;
-        $categoria->save();
-        return redirect('/catalogo/categorias');
+        $direccion = strtr("$request->nombre", " ", "_");
+        $seccionuno = Seccion::where('id',$request->id_categoria)->select('nombre')->first();
+         $direccionuno = strtr($seccionuno->nombre, " ", "_");
+         $path = public_path("images/productos/$direccionuno/$direccion");
+     if(!File::isDirectory($path)){
+         File::makeDirectory($path, 0777, true, true);
+         $categoria->save();
+         return redirect('/catalogo/categorias')->with('crear', 'ok');
+
+
+     }else{
+         return redirect('/catalogo/categorias')->with('crear', 'no');
+     }
     }
 
     public function storesecciones(Request $request){
@@ -45,21 +59,62 @@ class CatalogoController extends Controller
 
         $seccion = new seccion();
         $seccion-> nombre = $request->nombre;
+        $direccion = strtr("$request->nombre", " ", "_");
+        $path = public_path("images/productos/$direccion");
+    if(!File::isDirectory($path)){
+        File::makeDirectory($path, 0777, true, true);
         $seccion->save();
-        return redirect('/catalogo/secciones');
+        return redirect('/catalogo/secciones')->with('crear', 'ok');
+
+
+    }else{
+        return redirect('/catalogo/secciones')->with('crear', 'no');
+    }
+
     }
 
     public function deletesecciones(Seccion $seccion){
 
         $seccion = Seccion::where('id', $seccion->id)->get()->first();
+        $direccion = strtr("$seccion->nombre", " ", "_");
+        $path = public_path("images/productos/$direccion");
+        File::deleteDirectory($path);
         $seccion->delete();
         return redirect('/catalogo/secciones')->with('eliminar', 'ok');
     }
 
+
     public function deletecategorias(Categoria $Categoria){
         $Categoria = Categoria::where('id', $Categoria->id)->get()->first();
+        $direccion = strtr("$Categoria->nombre", " ", "_");
+        $seccionuno = Seccion::where('id',$Categoria->id_categoria)->select('nombre')->first();
+        $direccionuno = strtr($seccionuno->nombre, " ", "_");
+        $path = public_path("images/productos/$direccionuno/$direccion");
+        File::deleteDirectory($path);
         $Categoria->delete();
         return redirect('/catalogo/categorias')->with('eliminar', 'ok');
+    }
+
+    public function updatecategoria(Request $request){
+        $Categoria = Categoria::where('id',$request->id)->first();
+        $Categoria->id_categoria = $request->id_categoria;
+        $direccion = strtr("$Categoria->nombre", " ", "_");
+        $Categoria->nombre = $request->nombre;
+        $seccion = Seccion::where('id',$Categoria->id_categoria)->select('nombre')->first();
+        $direccionuno = strtr("$request->nombre", " ", "_");
+        $direcciondos = strtr("$seccion->nombre", " ", "_");
+        //return $direccionuno;
+        rename("images/productos/".$direcciondos."/".$direccion."/", "images/productos/".$direcciondos."/".$direccionuno."/");
+        $Categoria->save();
+
+        return redirect('/catalogo/categorias')->with('actualizar', 'ok');
+    }
+
+    public function updateseccion(Request $request){
+        $seccion = Seccion::find($request->id);
+        $seccion->nombre = $request->nombre;
+        $seccion->save();
+        return redirect('/catalogo/secciones')->with('actualizar', 'ok');
     }
 
 

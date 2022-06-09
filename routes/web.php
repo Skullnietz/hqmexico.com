@@ -42,6 +42,8 @@ Route::POST('/storecategorias', [App\Http\Controllers\CatalogoController::class,
 Route::GET('/catalogo/secciones', [App\Http\Controllers\CatalogoController::class, 'secciones'])->name('secciones');
 Route::GET('/deletesecciones/{seccion}', [App\Http\Controllers\CatalogoController::class, 'deletesecciones'])->name('deletesecciones');
 Route::GET('/deletecategorias/{categoria}', [App\Http\Controllers\CatalogoController::class, 'deletecategorias'])->name('deletecategorias');
+Route::GET('/updatecategoria', [App\Http\Controllers\CatalogoController::class, 'updatecategoria'])->name('deletecategoria');
+Route::GET('/updateseccion', [App\Http\Controllers\CatalogoController::class, 'updateseccion'])->name('deleteseccion');
 Route::POST('/storesecciones', [App\Http\Controllers\CatalogoController::class, 'storesecciones'])->name('storesecciones');
 // * Rutas para los usuarios
 Route::GET('/userindex', [App\Http\Controllers\UserController::class, 'userList'])->name('userindex');

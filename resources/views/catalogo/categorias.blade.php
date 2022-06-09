@@ -126,11 +126,70 @@ active
                                   <td> {{$categoria->id}} </td>
                                   <td> {{$categoria->seccion[0]->nombre}} </td>
                                   <td> {{$categoria->nombre}} </td>
-                                  <td>  <a  class="btn-sm btn-warning" href="/categoria/editar/{{$categoria->id}}">Editar</a>
+                                  <td>  <button type="button" class="btn-xs btn-warning" data-toggle="modal"
+                                    data-target="#exampleModal{{ $categoria->id }}">
+                                    Editar
+                                </button>
+                                <!-- Modal -->
+<div class="modal fade" id="exampleModal{{ $categoria->id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel{{ $seccion->id }}"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="ModalLabel{{ $categoria->id }}"> Editar Seccion   #{{ $categoria->id }}</h5>
+<button type="button" data-id="{{ $categoria->id }}" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body" >
+<form action="{{ url('/updatecategoria') }}"  >
+    @method('PUT')
+    @csrf
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Seccion</label>
+        <select name="id_categoria" class="form-control" id="exampleFormControlSelect1">
+        <option  value="{{$categoria->seccion[0]->id}}">{{$categoria->seccion[0]->nombre}}</option>
+          @foreach ($secciones as $seccion)
+          <option  value="{{$seccion->id}}">{{$seccion->nombre}} </option>
+          @endforeach
+        </select>
+    </div>
+<div class="form-group">
+    <label for="exampleFormControlInput1">Nombre de la seccion</label>
+
+    <input name="nombre" type="text" value="{{ $categoria->nombre }}" spellcheck class="form-control"
+         placeholder="Nombre de la seccion">
+</div>
+<input type="hidden" name="id" value="{{ $categoria->id }}">
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<?php
+$direccion = strtr("".$categoria->seccion[0]->nombre."", " ", "_");
+$direccionuno = strtr("$categoria->nombre", " ", "_");
+$directory = "images/productos/".$direccion."/".$direccionuno."";
+$filecount = 0;
+$active;
+$files = scandir($directory);
+if ($files){
+ $filecount = count($files);
+}
+if ($filecount == 2){
+$active ="ok";
+}else{
+$active ="disabled";
+}
+?>
                                     <form action="/deletecategorias/{{$categoria->id}}" class="fomulario-eliminar">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn-xs btn-danger ">Eliminar</button>
+                                        <button type="submit" class="btn-xs btn-danger {{$active}}" {{$active}}>Eliminar</button>
                                         </form></td>
                               </tr>
                               @endforeach
@@ -158,16 +217,46 @@ active
 <!-- /.content-wrapper -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.17/dist/sweetalert2.all.min.js"></script>
-@if(session('eliminar') == 'ok')
-<script>
-  Swal.fire(
-          '¡Borrado!',
-          'El registro ha sido borrado.',
-          'success'
+@if (session('eliminar') == 'ok')
+        <script>
+            Swal.fire(
+                '¡Borrado!',
+                'El registro ha sido borrado.',
+                'success'
 
-      )
-</script>
-@endif
+            )
+        </script>
+    @endif
+    @if (session('crear') == 'ok')
+        <script>
+            Swal.fire(
+                '¡Editado!',
+                'Se han guardado los cambios.',
+                'success'
+
+            )
+        </script>
+    @endif
+    @if (session('crear') == 'no')
+        <script>
+            Swal.fire(
+                'Error en la creacion',
+                'Este elemento esta duplicado.',
+                'error'
+
+            )
+        </script>
+    @endif
+    @if (session('actualizar') == 'ok')
+        <script>
+            Swal.fire(
+                '¡Creado!',
+                'Se han creado el registro.',
+                'success'
+
+            )
+        </script>
+    @endif
 <script>
 $('.fomulario-eliminar').submit(function(e){
  e.preventDefault();
