@@ -13,16 +13,15 @@ use App\Models\Seccion;
 
 class CatalogoController extends Controller
 {
+
     public function index()
     {
-        $user = Auth::user() == null ? false: true;
-        if($user){
-            $secciones = \DB::table('categorias')->get();
-                return view('catalogo.index')->with('secciones', $secciones);
-        }else{
-            return redirect(route('login'));
-        }
+        $secciones= Seccion::all();
 
+    }
+
+    public function productos(){
+        return view('catalogo.productos');
     }
 
     public function storecategorias(Request $request){
@@ -112,7 +111,10 @@ class CatalogoController extends Controller
 
     public function updateseccion(Request $request){
         $seccion = Seccion::find($request->id);
+        $direccion = strtr("$seccion->nombre", " ", "_");
         $seccion->nombre = $request->nombre;
+        $direccionuno = strtr("$request->nombre", " ", "_");
+        rename("images/productos/".$direccion,"images/productos/".$direccionuno);
         $seccion->save();
         return redirect('/catalogo/secciones')->with('actualizar', 'ok');
     }

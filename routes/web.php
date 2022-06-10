@@ -38,6 +38,7 @@ dd("Mail Sent Successfuly!");
 // * Rutas para Catalogo
 Route::GET('/catalogo', [App\Http\Controllers\CatalogoController::class, 'index'])->name('catalogo');
 Route::GET('/catalogo/categorias', [App\Http\Controllers\CatalogoController::class, 'categorias'])->name('categorias');
+Route::GET('/catalogo/productos', [App\Http\Controllers\CatalogoController::class, 'productos'])->name('catalogoproductos');
 Route::POST('/storecategorias', [App\Http\Controllers\CatalogoController::class, 'storecategorias'])->name('storecategorias');
 Route::GET('/catalogo/secciones', [App\Http\Controllers\CatalogoController::class, 'secciones'])->name('secciones');
 Route::GET('/deletesecciones/{seccion}', [App\Http\Controllers\CatalogoController::class, 'deletesecciones'])->name('deletesecciones');

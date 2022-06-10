@@ -7,7 +7,7 @@
   <title>HandiQuip GSE</title>
 
   <!-- Google Font: Source Sans Pro -->
-  
+
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -136,7 +136,7 @@
 
 
               <li class="nav-item">
-                <a href="../layout/boxed.html" class="nav-link @yield('TableroActive') ">
+                <a href="/home" class="nav-link @yield('TableroActive') ">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Tablero</p>
                 </a>
@@ -172,7 +172,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/productos/indexview" class="nav-link @yield('ProductosCatalogoActive')">
+                <a href="/catalogo/productos" class="nav-link @yield('ProductosCatalogoActive')">
                   <i class="nav-icon far fa-image"></i>
                   <p>Productos</p>
                 </a>
@@ -209,6 +209,22 @@
               <i class="nav-icon fab fa-product-hunt"></i>
               <p>
                 Productos
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/newsletter" class="nav-link @yield('NewsletterActive')">
+              <i class="nav-icon far fa-newspaper"></i>
+              <p>
+                Newsletter
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/newsletter" class="nav-link @yield('ContactoActive')">
+              <i class="nav-icon far fa-address-book"></i>
+              <p>
+                Contacto
               </p>
             </a>
           </li>

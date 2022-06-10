@@ -1,5 +1,11 @@
 @extends('layouts.sidebarnavbar')
-@section('ProductosActive')
+@section('CatalogoActive')
+active
+@endsection
+@section('CatalogoMenuActive')
+menu-open
+@endsection
+@section('ProductosCatalogoActive')
 active
 @endsection
 @section('contenidoPrincipal')
@@ -21,7 +27,7 @@ active
           </ol>
         </div><!-- /.col -->
       </div>
-      <a style="" class="btn btn-sm btn-success" href="/productos/create"><i class="fas fa-plus-circle"></i> Agregar Producto</a><!-- /.row -->
+
     </div><!-- /.container-fluid -->
   </div>
   <!-- /.content-header -->
@@ -35,7 +41,7 @@ active
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h5 class="card-title">Lista de Usuarios Registrados</h5>
+              <h5 class="card-title">Carpeta de productos</h5>
 
 
 
@@ -50,27 +56,17 @@ active
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" id="search-input" type="search" placeholder="Buscar producto" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit">Buscar</button>
-                  </form><br>
-                <div style="overflow-x:auto;">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Correo</th>
-                              <th scope="col">Enviar Correo</th>
-                              <th scope="col">Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody id="table-body">
+                <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Link with href
+                    </a>
+                  </p>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                    </div>
+                  </div>
 
-                          </tbody>
-                    </table>
-
-                </div>
 
         </div>
             <!-- ./card-body -->
