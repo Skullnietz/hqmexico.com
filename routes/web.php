@@ -58,7 +58,7 @@ Route::GET('/updatepassword/{id}', [App\Http\Controllers\UserController::class, 
 Route::GET('/newsletterindex', [App\Http\Controllers\NewsletterController::class, 'index'])->name('newsletterindex');
 Route::GET('/newslettershow/{id}', [App\Http\Controllers\NewsletterController::class, 'show'])->name('newslettershow');
 Route::POST('/newsletterstore', [App\Http\Controllers\NewsletterController::class, 'store'])->name('newsletterstore');
-Route::POST('/newsletterupdate/{id}', [App\Http\Controllers\NewsletterController::class, 'update'])->name('newsletterupdate');
+Route::GET('/newsletterupdate/{id}', [App\Http\Controllers\NewsletterController::class, 'update'])->name('newsletterupdate');
 Route::GET('/newsletterdelete/{id}', [App\Http\Controllers\NewsletterController::class, 'delete'])->name('newsletterdelete');
 Route::GET('/newsletterverificar/{id}', [App\Http\Controllers\NewsletterController::class, 'verificar'])->name('newsletterverificar');
 

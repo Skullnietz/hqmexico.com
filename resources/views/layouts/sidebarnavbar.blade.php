@@ -213,7 +213,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/newsletter" class="nav-link @yield('NewsletterActive')">
+            <a href="/newsletterindex" class="nav-link @yield('NewsletterActive')">
               <i class="nav-icon far fa-newspaper"></i>
               <p>
                 Newsletter

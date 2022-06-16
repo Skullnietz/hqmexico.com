@@ -10,7 +10,8 @@ class NewsletterController extends Controller
     public function index(){
         $user = Auth::user() == null ? false: true;
         if($user){
-            return \DB::table('newsletter')->select('id', 'nombre', 'email',)->get();
+            $usuarios = \DB::table('newsletter')->select('id', 'nombre', 'email',)->get();
+            return view('newsletter.create')->with('usuarios', $usuarios);
         }else{
             return redirect(route('login'));
         }
@@ -29,14 +30,14 @@ class NewsletterController extends Controller
 
         $user = Auth::user() == null ? false: true;
         if($user){
-            
+
             $newsletter = \DB::table('newsletter')->insert([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
                 'created_at' => date('Y-m-d h:i:s')
             ]);
 
-            return response("ok", 200);
+            return redirect()->route('newsletterindex');
         }else{
             return redirect(route('login'));
         }
@@ -51,7 +52,7 @@ class NewsletterController extends Controller
                     'email' => $request->email,
                     'updated_at' => date('Y-m-d h:i:s')
                 ]);
-            return 'Registro actualizado';
+                return redirect()->route('newsletterindex');
         }else{
             return redirect(route('login'));
         }
@@ -60,11 +61,10 @@ class NewsletterController extends Controller
     public function delete($id){
         $user = Auth::user() == null ? false: true;
         if($user){
-            $activo = (\DB::table('newsletter')->where('id', $id)->select('activo')->get())[0]->activo;
 
             $newsletter = \DB::table('newsletter')->where('id', $id)
                 ->delete();
-            return array(['deleted' => true]);
+                return redirect()->route('newsletterindex');
         }else{
             return redirect(route('login'));
         }
