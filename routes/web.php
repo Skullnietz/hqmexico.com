@@ -76,3 +76,10 @@ Route::group(['prefix' => 'productos'], function(){
     Route::GET('search/{input}', [App\Http\Controllers\ProductosController::class, 'search'])->name('productossearch');
     Route::GET('getCategorias', [App\Http\Controllers\ProductosController::class, 'getCategorias'])->name('productosgetcategorias');
 });
+
+// * Rutas para el catalogo
+Route::group(['prefix' => 'catalogo'], function(){
+    Route::get('view', function(){
+        return view('catalogo.index');
+    });
+});
