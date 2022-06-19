@@ -11,6 +11,9 @@ use App\Models\User;
 use App\Models\Categoria;
 use App\Models\Seccion;
 
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade as PDF;
+
 class CatalogoController extends Controller
 {
 
@@ -144,5 +147,34 @@ class CatalogoController extends Controller
     {
         $secciones = \DB::table('categorias')->get();
         return view('catalogo.secciones')->with('secciones', $secciones);
+    }
+
+    public function exportCatalogo(){
+        $productos = \DB::table('productos')->select('id','title', 'sku', 'seccion', 'img')
+            ->limit(11)
+            ->get();
+        $count = 0;
+        $pages = [];
+        $pageNum = 1;
+        $checkNum = 1;
+        
+        while($count<count($productos)){
+            $page = [];
+            $countNum = 0;
+            for($i = ($pageNum*6)-6; $i<$pageNum*6; $i++){
+                if(!isset($productos[$i])){break;}
+                array_push($page, $productos[$i]);
+                $count++;
+            }
+            $pageNum++;
+            array_push($pages, $page);
+        }
+        
+        //return $productos;
+        //return $count;
+        //return $pages;
+        $pdf = PDF::loadView('catalogo.index', compact('pages'))->setPaper('letter', 'landscape');
+        $pdf->render();
+        return $pdf->stream('catalogo.pdf');
     }
 }

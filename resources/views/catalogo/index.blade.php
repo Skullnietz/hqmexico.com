@@ -6,24 +6,15 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <title>Catalogo HQMEX</title>
-    <link rel="stylesheet" href="{{ asset('css/nicepage.css') }}">
+
 
     <meta name="generator" content="Nicepage 4.12.21, nicepage.com">
-    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-    <link href="{{ asset('layout/styles/layout.css') }}" rel="stylesheet" type="text/css" media="all">
 
-    <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "name": "",
-        "logo": "images/default-logo.png"
-      }
-    </script>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="Casa">
     <meta property="og:type" content="website">
 
+    <!-- Estilos de los productos -->
     <style>
       .u-section-1 .u-sheet-1 {
         min-height: 594px;
@@ -440,69 +431,165 @@
         background-color: #28739E;
       }
     </style>
+
+    <!-- Estilos para las paginas -->
+    <style>
+      .page-break {
+          page-break-after: always;
+      }
+    </style>
+
+    <style>
+      *{
+        font-family: Arial;
+        margin: 0;
+        padding: 0;
+      }
+      header{
+        position: relative;
+        top: 10px;
+      }
+      .product-container{
+        width: 85%;
+        position: relative;
+        top: 70px;
+        left: 12%;
+      }
+      .product-list{
+        margin: auto;
+      }
+      hr{
+        position: relative;
+        width: 90%;
+        margin: auto;
+        margin-bottom: 60px;
+      }
+      .product-info-container{
+        display:inline-block;
+        width: 29%;
+        position: relative;
+        height: 300px;
+      }
+      .product-container-element{
+        text-align: right;
+      }
+      .product-container-element .product-title-button{
+        text-decoration: none;
+        justify-content: right;
+        color: black;
+        border-bottom: 1px solid #081a2b;
+        width: 2in;
+        height: 1cm; 
+        position: relative;
+        top: -15px;
+        right: -30px;
+        font-size: 1rem;
+        background: white;
+        opacity: 0.8;
+        padding-right: 5px;
+        border-radius: 10px 0 0 0;
+      }
+      .product-container-element .product-title-button span{
+        display: flex;
+        right: 10px;
+      }
+      .product-image{
+        width: 100%;
+        border: 1px solid whitesmoke;
+      }
+      .product-sku{
+        text-align: center;
+        position: relative;
+      }
+
+      .footer{
+        text-align: center;
+        height: 100px;
+        width: 100%;
+        margin: auto;
+        background: #5e666e;
+        position: relative;
+        top: 45px;
+        text-align: right;
+      }
+      .footer p{
+        position: relative;
+        top: 20px;
+        right: 20px;
+        color: white;
+        font-size: 1.3rem;
+      }
+      .page-container{
+        width: 11in;
+        height: 8.5in;
+        overflow: hidden;
+      }
+      .category-indicator{
+        position: absolute;
+        width: 3.5in;
+        transform: rotate(-90deg);
+        text-align: right;
+        top: 250px;
+        left: -145px;
+        font-size: 2rem;
+        background: #2166ab;
+        padding-top: 15px;
+        padding-right: 15px;
+        color: whitesmoke;
+      }
+    </style>
+
+    <style>
+      header{
+        display: flex;
+      }
+      header div{
+        position: relative;
+        left: 47%;
+      }
+      header div ul li{
+        display: inline-block;
+        text-decoration: none;
+      }
+    </style>
+
   </head>
   <body class="u-body u-xl-mode">
-  <header id="header" class="hoc clear">
-    <!-- * Header -->
-    <div id="logo" class="one_quarter first">
-      <h3 class="logoname clear"><a style="text-decoration:none" href="index.html"><img src="/images/demo/logohq.jpg" style="height:80px" alt="logo-hq"></a></h3>
-    </div>
-    <div class="three_quarter" >
-      <ul class="nospace clear">
-        <li class="one_third first">
-          <div class="block clear"><a style="text-decoration:none" href="tel:+527225734334" target="_blank"><i class="fas fa-phone"></i></a> <span><strong>Telefono:</strong> +52 (722) 573 4334</span></div>
-        </li>
-        <li class="one_third">
-          <div class="block clear"><a style="text-decoration:none" href="mailto:contacto@hqmex.com" target="_blank"><i class="fas fa-envelope"></i></a> <span><strong>Mail:</strong> contacto@hqmex.com</span></div>
-        </li>
-        <li class="one_third">
-         <a class="rounded-button-facebook"  href="https://www.facebook.com/handiquipmexico/" target="_blank"><i  class="fab fa-facebook"></i></a> <a class="rounded-button-instagram" href="https://www.instagram.com/hq__mexico/" target="_blank"><i class="fab fa-instagram"></i></a> <a class="rounded-button-linkedin" href="https://www.linkedin.com/company/hqmex/" target="_blank"><i class="fab fa-linkedin"></i></a> <a class="rounded-button-twitter" href="https://twitter.com/hqmex" target="_blank"><i class="fab fa-twitter"></i></a>
-        </li>
-      </ul>
-    </div>
-    <!-- * Fin Header -->
-  </header>
-    <section class="u-clearfix u-section-1" id="carousel_c88e">
-      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <div class="u-expanded-width u-list u-list-1">
-          <div class="u-repeater u-repeater-1">
-            @if(isset($productos))
-            @else
-              <!-- * Proudctos de ejemplo -->
-              <div class="u-align-center u-container-style u-list-item u-repeater-item">
-                <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
-                  <img src="{{ asset('images/productos/Consumibles_Aviacion/ACEITES/1_2380.png') }}" alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="1000" data-image-height="1500">
-                  <a href="#" class="u-btn u-button-style u-palette-4-base u-btn-1">
-                    Aceite
-                  </a>
-                  <p class="u-text u-text-1">SKU-EJEMPLO</p>
-                </div>
-              </div>
-              <div class="u-align-center u-container-style u-list-item u-repeater-item">
-                <div class="u-container-layout u-similar-container u-container-layout-2">
-                  <img src="{{ asset('images/productos/Consumibles_Aviacion/ANTICONGELANTES/PRIST-C.png') }}" alt="" class="u-expanded-width u-image u-image-default u-image-2">
-                  <a href="#" class="u-btn u-button-style u-palette-4-base u-btn-2">Anticongelantes</a>
-                  <p class="u-text u-text-2">SKU-EJEMPLO</p>
-                </div>
-              </div>
-              <div class="u-align-center u-container-style u-list-item u-repeater-item">
-                <div class="u-container-layout u-similar-container u-container-layout-3">
-                  <img src="{{ asset('images/productos/Consumibles_Aviacion/BATERIAS/1.png') }}" alt="" class="u-expanded-width u-image u-image-default u-image-3">
-                  <a href="https://nicepage.com/joomla-page-builder" class="u-btn u-button-style u-palette-4-base u-btn-3">Baterias</a>
-                  <p class="u-text u-text-3">SKU-EJEMPLO</p>
-                </div>
-              </div>
-              <!-- * Fin proudctos de ejemplo -->
-            @endif
-          </div>
+    @foreach($pages as $page)
+    <div class="page-container">
+      <header id="header" class="hoc clear">
+        <!-- * Header -->
+        <div id="logo" class="one_quarter first">
+          <h3 class="logoname clear"><a style="text-decoration:none" href="{{ route('inicio') }}"><img src="{{ asset('/images/demo/logohq.jpg') }}" style="height:80px" alt="logo-hq"></a></h3>
         </div>
-      </div>
-    </section>
-    
-    <section class="u-backlink u-clearfix u-grey-80">
-      <p class="u-text">
-        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam impedit rerum, repellendus cum optio enim voluptatum dolor officiis libero temporibus soluta iure distinctio similique illo dicta error expedita molestias quam?</span>
-      </p> 
-    </section>
+      </header>
+      <section class="category-indicator">
+        Consumibles <br>
+        GSE
+      </section>
+
+      <section class="product-container">
+            <div class="product-list">
+                <!-- * Productos de ejemplo -->
+                @foreach($page as $producto)
+                <div class="product-info-container">
+                    <div class="product-container-element">
+                      <img src="{{ asset($producto->img) }}" alt="" class="product-image">
+                      <div href="#" class="product-title-button">
+                        <span>{{ $producto->title }}</span>
+                      </div>
+                      <p class="product-sku">{{ $producto->sku }}</p>
+                    </div>
+                  </div>
+                  @endforeach
+                <!-- * Fin proudctos de ejemplo -->
+            </div>
+      </section>
+      
+      <section class="footer">
+        <p>1</p>
+      </section>
+    </div>
+    @endforeach
   </body>
 </html>

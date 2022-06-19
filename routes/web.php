@@ -36,7 +36,6 @@ dd("Mail Sent Successfuly!");
 });
 
 // * Rutas para Catalogo
-Route::GET('/catalogo', [App\Http\Controllers\CatalogoController::class, 'index'])->name('catalogo');
 Route::GET('/catalogo/categorias', [App\Http\Controllers\CatalogoController::class, 'categorias'])->name('categorias');
 Route::GET('/catalogo/productos', [App\Http\Controllers\CatalogoController::class, 'productos'])->name('catalogoproductos');
 Route::POST('/storecategorias', [App\Http\Controllers\CatalogoController::class, 'storecategorias'])->name('storecategorias');
@@ -79,7 +78,7 @@ Route::group(['prefix' => 'productos'], function(){
 
 // * Rutas para el catalogo
 Route::group(['prefix' => 'catalogo'], function(){
-    Route::get('view', function(){
-        return view('catalogo.index');
-    });
+    Route::GET('/', [App\Http\Controllers\CatalogoController::class, 'index'])->name('catalogo');
+    Route::get('example', function(){return view('catalogo.index');})->name('catalogoexample');
+    Route::get('export', [App\Http\Controllers\CatalogoController::class, 'exportCatalogo'])->name('catalogoexport');
 });
