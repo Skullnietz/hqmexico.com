@@ -24,7 +24,14 @@ class CatalogoController extends Controller
     }
 
     public function productos(){
-        return view('catalogo.productos');
+        $secciones = \DB::table('categorias')->select('id', 'nombre')->get();
+        $categorias = \DB::table('secciones')->get();
+        $productos = \DB::table('productos')->select('id', 'title', 'sku', 'img', 'categoria')->get();
+        //return $productos;
+        return view('catalogo.productos')
+            ->with('secciones', $secciones)
+            ->with('categorias', $categorias)
+            ->with('productos', $productos);
     }
 
     public function storecategorias(Request $request){
@@ -149,10 +156,27 @@ class CatalogoController extends Controller
         return view('catalogo.secciones')->with('secciones', $secciones);
     }
 
-    public function exportCatalogo(){
-        $productos = \DB::table('productos')->select('id','title', 'sku', 'seccion', 'img')
-            ->limit(11)
-            ->get();
+    public function catalogoExport(){
+        $productos = [];
+        while($count<count($productos)){
+            $page = [];
+            $countNum = 0;
+            for($i = ($pageNum*6)-6; $i<$pageNum*6; $i++){
+                if(!isset($productos[$i])){break;}
+                array_push($page, $productos[$i]);
+                $count++;
+            }
+            $pageNum++;
+            array_push($pages, $page);
+        }
+        
+        return $pages;
+    }
+
+    public function exportCatalogo(Request $request){
+        
+        $productos = json_decode($request->productos);
+        //return $productos;
         $count = 0;
         $pages = [];
         $pageNum = 1;
@@ -170,11 +194,9 @@ class CatalogoController extends Controller
             array_push($pages, $page);
         }
         
-        //return $productos;
-        //return $count;
         //return $pages;
         $pdf = PDF::loadView('catalogo.index', compact('pages'))->setPaper('letter', 'landscape');
         $pdf->render();
-        return $pdf->stream('catalogo.pdf');
+        return $pdf->download('catalogo.pdf');
     }
 }

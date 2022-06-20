@@ -80,5 +80,6 @@ Route::group(['prefix' => 'productos'], function(){
 Route::group(['prefix' => 'catalogo'], function(){
     Route::GET('/', [App\Http\Controllers\CatalogoController::class, 'index'])->name('catalogo');
     Route::get('example', function(){return view('catalogo.index');})->name('catalogoexample');
-    Route::get('export', [App\Http\Controllers\CatalogoController::class, 'exportCatalogo'])->name('catalogoexport');
+    Route::POST('export', [App\Http\Controllers\CatalogoController::class, 'exportCatalogo'])->name('catalogoexport');
+    Route::GET('productos', [App\Http\Controllers\CatalogoController::class, 'productos'])->name('catalogoproductos');
 });

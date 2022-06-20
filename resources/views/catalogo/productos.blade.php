@@ -55,19 +55,117 @@ active
               </div>
             </div>
             <!-- /.card-header -->
+            <style>
+              .buttons-area{
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+              }
+              .product-container{
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 10px;
+                grid-template-areas: "img title sku"
+                                     "img button button";
+              }
+              .product-image{
+                grid-area: img;
+              }
+              .product-image img{
+                heigth: 100px;
+              }
+              .product-title{
+                grid-area: title;
+              }
+              .prduct-title span{
+                color: #000C28;
+              }
+              .product-sku{
+                grid-area: sku;
+              }
+              .product-sku span{
+                color: #000C28;
+              }
+              .product-button{
+                grid-area: button;
+                text-align: center;
+              }
+            </style>
             <div class="card-body">
-                <p>
-                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                      Link with href
+                <p class="buttons-area">
+                  @foreach($secciones as $seccion)
+                    <a class="btn btn-primary" data-toggle="collapse" href="#seccion-{{ $seccion->id }}" role="button" aria-expanded="false" aria-controls="seccion-{{ $seccion->id }}">
+                      {{ $seccion->nombre }}
                     </a>
-                  </p>
-                  <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                    </div>
+                  @endforeach
+                </p>
+                @foreach($secciones as $seccion)
+                <div class="collapse" id="seccion-{{ $seccion->id }}">
+                  <div class="card card-body">
+                    <p class="buttons-area">
+                      @foreach($categorias as $categoria)
+                        @if($categoria->id_categoria == $seccion->id)
+                          <a class="btn btn-primary" data-toggle="collapse" href="#categoria-{{ $categoria->id }}" role="button" aria-expanded="false" aria-controls="categoria-{{ $categoria->id }}">
+                            {{ $categoria->nombre }}
+                          </a>
+                        @endif
+                      @endforeach
+                    </p>
                   </div>
-
-
+                </div>
+                @endforeach
+                @foreach($categorias as $categoria)
+                <div class="collapse" id="categoria-{{ $categoria->id }}">
+                  @foreach($productos as $producto)
+                    @if($producto->categoria == $categoria->nombre)
+                      <div class="card card-body">
+                        <div class="product-container">
+                          <div class="product-image">
+                            <img src="" alt="Imagen de {{ $producto->title == '' ? $producto->categoria : $producto->title }}">
+                          </div>
+                          <div class="product-title">
+                            <span>Titulo:</span> {{ $producto->title == '' ? $producto->categoria : $producto->title }}
+                          </div>
+                          <div class="product-sku">
+                            <span>SKU:</span> {{ $producto->sku }}
+                          </div>
+                          <div class="product-button" >
+                            <input type="checkbox" id="product-button-{{ $producto->id }}"> Agregar
+                          </div>
+                        </div>
+                      </div>
+                    @endif
+                  @endforeach
+                </div>
+                @endforeach
+                <center><button class="btn btn-submit" id="generar-catalogo-button">Generar catalogo</button></center>
+                <meta name="csrf-token" content="{{csrf_token()}}">
+                <script>
+                  let count = {{count($productos)}};
+                  let productList = @json($productos);
+                  document.querySelector('#generar-catalogo-button').addEventListener('click', (e)=>{
+                    e.preventDefault();
+                    let productos = [];
+                    for(var i =1; i<=count; i++){
+                      let check = document.querySelector(`#product-button-${ i }`);
+                      if(check.checked){
+                        productos.push(productList[i]);
+                      }
+                    }
+                    if(productos.length==0){
+                      alert('No se han seleccionado productos');
+                    }else{
+                      document.querySelector('#productos-text-area').value = JSON.stringify(productos);
+                      document.querySelector('#catalogo-form').submit();
+                    }
+                  });
+                </script>
+                <form id="catalogo-form" method="post" action="{{route('catalogoexport')}}" style="display: none">
+                  @csrf
+                  <textarea name="productos" id="productos-text-area" cols="30" rows="10"></textarea>
+                  <input type="submit" id="formSubmit" value="enviar">
+                </form>
         </div>
             <!-- ./card-body -->
             <div class="card-footer">
@@ -91,7 +189,7 @@ active
 </div>
 <!-- /.content-wrapper -->
 
-<script>
+<!--<script>
   const productIndexTable = (search_path)=>{
     let tableBody = document.querySelector('#table-body');
     fetch(search_path)
@@ -139,5 +237,5 @@ active
   };
   productIndexTable("{{ route('productosindex') }}");
   search();
-</script>
+</script>-->
 @endsection
