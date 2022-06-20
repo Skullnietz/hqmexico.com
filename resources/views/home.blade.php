@@ -49,7 +49,7 @@ active
 
             <div class="info-box-content">
               <span class="info-box-text">Suscriptores</span>
-              <span class="info-box-number">41,410</span>
+              <span class="info-box-number">{{$suscriptores}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
