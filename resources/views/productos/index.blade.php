@@ -107,14 +107,18 @@ active
         let data = info[0].data;
         tableBody.innerHTML = "";
         data.forEach((element)=>{
+          let seccionesArray = element.seccion[0];
+          let secciones = seccionesArray.nombre;
+          let categoriasArray = element.categoria[0];
+          let categorias = categoriasArray.nombre;
           let tableRow = document.createElement('tr');
           tableRow.setAttribute('id', `tr-${element.id}`);
           let id = `<th scope="row">${element.id}</th>`;
-          let seccion = `<td>${element.seccion}</td>`;
-          let categoria = `<td>${element.categoria}</td>`;
+          let seccion = `<td>${secciones}</td>`;
+          let categoria = `<td>${categorias}</td>`;
           let title = `<td>${element.title}</td>`;
           let sku = `<td>${element.sku}</td>`;
-          let img = `<td><img class="img-thumbnail" width="100px" src="${element.img}"></td>`;
+          let img = `<td><img class="img-thumbnail" width="100px" src="/images/productos/${secciones}/${categorias}/${element.img}"></td>`;
           let replace_num = element.replace_num == null ? `<td></td>`: `<td>${element.replace_num}</td>`;
           let actionsButton = `<td><a id="editar-button-${element.id}" class="btn btn-xs btn-primary" href="../productos/show/${element.id}"><i class="fas fa-edit"></i> Editar </a>
                                <a id="eliminar-button-${element.id}" class="btn btn-xs btn-warning" href=""><i class="fas fa-minus-circle"></i> Borrar </a></td>`;

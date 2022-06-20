@@ -11,7 +11,15 @@ class ProductosController extends Controller
         $user = Auth::user() == null ? false: true;
         if($user){
             $productos = \DB::table('productos')->select('id', 'title', 'sku', 'img', 'replace_num','seccion','categoria')->where('activo', 1)->get();
-            return json_encode(array(['data' => $productos]));
+            $data = array();
+            foreach($productos as $p){
+            $categoria = \DB::table('secciones')->where('id',$p->categoria)->get();
+            $seccion = \DB::table('categorias')->where('id',$p->seccion)->get();
+            $p->seccion = $seccion;
+            $p->categoria = $categoria;
+            array_push($data, $p);
+            }
+            return json_encode(array(['data' => $data]));
         }else{
             return redirect(route('login'));
         }
@@ -72,11 +80,11 @@ class ProductosController extends Controller
     }
 
     public function store(Request $request){
-        
+
         $user = Auth::user() == null ? false: true;
         if($user){
 
-            // ! Esta omitiendo el if pq la imagen va vacia 
+            // ! Esta omitiendo el if pq la imagen va vacia
             $img_storage_path = "";
             if($request->file('img') != ""){
                 $file = $request->file('img');
@@ -104,8 +112,8 @@ class ProductosController extends Controller
                 'seccion' => $request->seccion,
                 'categoria' => $request->categoria
             ]);
-            
-            
+
+
 
             if($request->file('img') != ''){
                 $file = $request->file('img');

@@ -28,7 +28,9 @@ class HomeController extends Controller
         $user = Auth::user() == null ? false: true;
         if($user){
             $productos = \DB::table('productos')->count();
-                return view('home')->with('productos', $productos);
+            $suscriptores = \DB::table('newsletter')->count();
+
+                return view('home')->with('productos', $productos)->with('suscriptores', $suscriptores);
         }else{
             return redirect(route('login'));
         }
