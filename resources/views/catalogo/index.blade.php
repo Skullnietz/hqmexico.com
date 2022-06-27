@@ -492,6 +492,7 @@
       .product-container-element .product-title-button span{
         display: flex;
         right: 10px;
+        font-size: 1.3rem;
       }
       .product-image{
         width: 100%;
