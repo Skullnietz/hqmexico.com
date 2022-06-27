@@ -14,6 +14,9 @@ use App\Models\Seccion;
 use Dompdf\Dompdf;
 use Barryvdh\DomPDF\Facade as PDF;
 
+require_once __DIR__ . '/vendor/autoload.php';
+use Mpdf\Mpdf;
+
 class CatalogoController extends Controller
 {
 
@@ -176,26 +179,47 @@ class CatalogoController extends Controller
     public function exportCatalogo(Request $request){
         
         $productos = json_decode($request->productos);
+
+        //return $this->createPages($productos);
+        
+        //return $pages;
+        $html = view('catalogo.index')->render();
+        $mpdf = new Mpdf(/*[
+            'fontdata'=>[
+                'arial' => [
+                    'R' => 'arial.ttf',
+                    'B' => 'arialbd.ttf'
+                ]
+            ],
+            'default_font' => 'arial',
+            "format" => [264.8,188.9],
+        ]*/);
+        $mpdf->SetDisplayMode('fullpage');
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('catalogo.pdf',"I");
+    }
+
+    function createPages($productos){
+
         $count = 0;
         $pages = [];
         $pageNum = 1;
         $checkNum = 1;
-        
+        $page = [];
+
         while($count<count($productos)){
-            $page = [];
-            $countNum = 0;
-            for($i = ($pageNum*6)-6; $i<$pageNum*6; $i++){
-                if(!isset($productos[$i])){break;}
+            $i = ($pageNum*6)-6;
+            $val = intval($pageNum*6) > intval(count($productos)) ? count($productos) : ($pageNum*6);
+            for($i; $i<$val; $i++){
+                
                 array_push($page, $productos[$i]);
                 $count++;
             }
             $pageNum++;
             array_push($pages, $page);
+            $page = [];
         }
-        
-        //return $pages;
-        $pdf = PDF::loadView('catalogo.index', compact('pages'))->setPaper('letter', 'landscape');
-        $pdf->render();
-        return $pdf->download('catalogo.pdf');
+
+        return $pages;
     }
 }

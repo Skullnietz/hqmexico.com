@@ -495,7 +495,7 @@
         font-size: 1.3rem;
       }
       .product-image{
-        width: 100%;
+        height: 200px;
         border: 1px solid whitesmoke;
       }
       .product-sku{
@@ -556,6 +556,7 @@
 
   </head>
   <body class="u-body u-xl-mode">
+    @if(isset($pages))
     @foreach($pages as $page)
     <div class="page-container">
       <header id="header" class="hoc clear">
@@ -592,5 +593,84 @@
       </section>
     </div>
     @endforeach
+    @else
+    <div class="page-container">
+      <header id="header" class="hoc clear">
+        <!-- * Header -->
+        <div id="logo" class="one_quarter first">
+          <h3 class="logoname clear"><a style="text-decoration:none" href="{{ route('inicio') }}"><img src="{{ asset('/images/demo/logohq.jpg') }}" style="height:80px" alt="logo-hq"></a></h3>
+        </div>
+      </header>
+      <section class="category-indicator">
+        Consumibles <br>
+        GSE
+      </section>
+
+      <section class="product-container">
+            <div class="product-list">
+                <!-- * Productos de ejemplo -->
+                <div class="product-info-container">
+                    <div class="product-container-element">
+                      <img src="{{ asset('images/productos/Consumibles_Aviacion/ACEITES/1_2380.png') }}" alt="" class="product-image">
+                      <div href="#" class="product-title-button">
+                        <span>Titulo</span>
+                      </div>
+                      <p class="product-sku">SKU</p>
+                    </div>
+                  </div>
+                  <div class="product-info-container">
+                    <div class="product-container-element">
+                      <img src="{{ asset('images/productos/Consumibles_Aviacion/ACEITES/1_2380.png') }}" alt="" class="product-image">
+                      <div href="#" class="product-title-button">
+                        <span>Titulo</span>
+                      </div>
+                      <p class="product-sku">SKU</p>
+                    </div>
+                  </div>
+                  <div class="product-info-container">
+                    <div class="product-container-element">
+                      <img src="{{ asset('images/productos/Consumibles_Aviacion/ACEITES/1_2380.png') }}" alt="" class="product-image">
+                      <div href="#" class="product-title-button">
+                        <span>Titulo</span>
+                      </div>
+                      <p class="product-sku">SKU</p>
+                    </div>
+                  </div>
+                  <div class="product-info-container">
+                    <div class="product-container-element">
+                      <img src="{{ asset('images/productos/Consumibles_Aviacion/ACEITES/1_2380.png') }}" alt="" class="product-image">
+                      <div href="#" class="product-title-button">
+                        <span>Titulo</span>
+                      </div>
+                      <p class="product-sku">SKU</p>
+                    </div>
+                  </div>
+                  <div class="product-info-container">
+                    <div class="product-container-element">
+                      <img src="{{ asset('images/productos/Consumibles_Aviacion/ACEITES/1_2380.png') }}" alt="" class="product-image">
+                      <div href="#" class="product-title-button">
+                        <span>Titulo</span>
+                      </div>
+                      <p class="product-sku">SKU</p>
+                    </div>
+                  </div>
+                  <div class="product-info-container">
+                    <div class="product-container-element">
+                      <img src="{{ asset('images/productos/Consumibles_Aviacion/ACEITES/1_2380.png') }}" alt="" class="product-image">
+                      <div href="#" class="product-title-button">
+                        <span>Titulo</span>
+                      </div>
+                      <p class="product-sku">SKU</p>
+                    </div>
+                  </div>
+                <!-- * Fin proudctos de ejemplo -->
+            </div>
+      </section>
+      
+      <section class="footer">
+        <p>1</p>
+      </section>
+    </div>
+    @endif
   </body>
 </html>
