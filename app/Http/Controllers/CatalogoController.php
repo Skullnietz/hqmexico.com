@@ -14,7 +14,6 @@ use App\Models\Seccion;
 use Dompdf\Dompdf;
 use Barryvdh\DomPDF\Facade as PDF;
 
-require_once __DIR__ . '/vendor/autoload.php';
 use Mpdf\Mpdf;
 
 class CatalogoController extends Controller
@@ -183,20 +182,9 @@ class CatalogoController extends Controller
         //return $this->createPages($productos);
         
         //return $pages;
-        $html = view('catalogo.index')->render();
-        $mpdf = new Mpdf(/*[
-            'fontdata'=>[
-                'arial' => [
-                    'R' => 'arial.ttf',
-                    'B' => 'arialbd.ttf'
-                ]
-            ],
-            'default_font' => 'arial',
-            "format" => [264.8,188.9],
-        ]*/);
-        $mpdf->SetDisplayMode('fullpage');
-        $mpdf->WriteHTML($html);
-        $mpdf->Output('catalogo.pdf',"I");
+        $pdf = PDF::loadView('catalogo.index', ['pages'=>$this->createPages($productos)])
+            ->setPaper('letter', 'landscape');
+        return $pdf->download('CatalogoHQMex.pdf'); 
     }
 
     function createPages($productos){

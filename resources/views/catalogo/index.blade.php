@@ -483,7 +483,7 @@
         position: relative;
         top: -15px;
         right: -30px;
-        font-size: 1rem;
+        font-size: 0.5rem;
         background: white;
         opacity: 0.8;
         padding-right: 5px;
@@ -492,7 +492,7 @@
       .product-container-element .product-title-button span{
         display: flex;
         right: 10px;
-        font-size: 1.3rem;
+        font-size: 1rem;
       }
       .product-image{
         height: 200px;
@@ -574,6 +574,7 @@
             <div class="product-list">
                 <!-- * Productos de ejemplo -->
                 @foreach($page as $producto)
+                @if($producto != null)
                 <div class="product-info-container">
                     <div class="product-container-element">
                       <img src="{{ asset($producto->img) }}" alt="" class="product-image">
@@ -583,6 +584,7 @@
                       <p class="product-sku">{{ $producto->sku }}</p>
                     </div>
                   </div>
+                  @endif
                   @endforeach
                 <!-- * Fin proudctos de ejemplo -->
             </div>
