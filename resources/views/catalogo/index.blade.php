@@ -576,7 +576,7 @@
                     <div class="product-container-element">
                       <img src="{{ asset($producto->img) }}" alt="" class="product-image">
                       <div href="#" class="product-title-button">
-                        <span>{{ $producto->title }}</span>
+                        <span>{{ $producto->title == '' ? $producto->categoria : $producto->title }}</span>
                       </div>
                       <p class="product-sku">{{ $producto->sku }}</p>
                     </div>

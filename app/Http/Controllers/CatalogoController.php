@@ -176,7 +176,6 @@ class CatalogoController extends Controller
     public function exportCatalogo(Request $request){
         
         $productos = json_decode($request->productos);
-        //return $productos;
         $count = 0;
         $pages = [];
         $pageNum = 1;
