@@ -11,7 +11,6 @@ use App\Models\User;
 use App\Models\Categoria;
 use App\Models\Seccion;
 
-use Dompdf\Dompdf;
 use Barryvdh\DomPDF\Facade as PDF;
 
 use Mpdf\Mpdf;
