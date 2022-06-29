@@ -566,18 +566,17 @@
         </div>
       </header>
       <section class="category-indicator">
-        Consumibles <br>
-        GSE
+        {{ $page[1] }}
       </section>
 
       <section class="product-container">
             <div class="product-list">
                 <!-- * Productos de ejemplo -->
-                @foreach($page as $producto)
+                @foreach($page[0] as $producto)
                 @if($producto != null)
                 <div class="product-info-container">
                     <div class="product-container-element">
-                      <img src="{{ asset($producto->img) }}" alt="" class="product-image">
+                      <img src="{{ asset('images/productos/'.str_replace(' ', '', $producto->seccion).'/'.str_replace(' ', '', $producto->categoria).'/'.$producto->img) }}" alt="" class="product-image">
                       <div href="#" class="product-title-button">
                         <span>{{ $producto->title == '' ? $producto->categoria : $producto->title }}</span>
                       </div>

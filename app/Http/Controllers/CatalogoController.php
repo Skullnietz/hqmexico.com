@@ -27,7 +27,7 @@ class CatalogoController extends Controller
     public function productos(){
         $secciones = \DB::table('categorias')->select('id', 'nombre')->get();
         $categorias = \DB::table('secciones')->get();
-        $productos = \DB::table('productos')->select('id', 'title', 'sku', 'img', 'categoria')->get();
+        $productos = \DB::table('productos')->select('id', 'title', 'sku', 'img',  'categoria')->get();
         //return $productos;
         return view('catalogo.productos')
             ->with('secciones', $secciones)
@@ -193,18 +193,23 @@ class CatalogoController extends Controller
         $pageNum = 1;
         $checkNum = 1;
         $page = [];
+        $productosP = [];
 
         while($count<count($productos)){
             $i = ($pageNum*6)-6;
             $val = intval($pageNum*6) > intval(count($productos)) ? count($productos) : ($pageNum*6);
             for($i; $i<$val; $i++){
                 
-                array_push($page, $productos[$i]);
+                array_push($productosP, $productos[$i]);
                 $count++;
             }
+            $categoria = $productosP[0]->categoria;
+            array_push($page, [$productosP, $categoria]);
+
             $pageNum++;
-            array_push($pages, $page);
+            array_push($pages, $page[0]);
             $page = [];
+            $productosP = [];
         }
 
         return $pages;
