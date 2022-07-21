@@ -74,6 +74,8 @@ Route::group(['prefix' => 'productos'], function(){
     Route::POST('delete/{id}', [App\Http\Controllers\ProductosController::class, 'delete'])->name('productosdelete');
     Route::GET('search/{input}', [App\Http\Controllers\ProductosController::class, 'search'])->name('productossearch');
     Route::GET('getCategorias', [App\Http\Controllers\ProductosController::class, 'getCategorias'])->name('productosgetcategorias');
+    Route::GET('getCategoriasByID/{id}', [App\Http\Controllers\ProductosController::class, 'getCategoriasByID'])->name('productosgetcategoriasbyid');
+    Route::GET('getCategoriasByName/{nombre}', [App\Http\Controllers\ProductosController::class, 'getCategoriasByName'])->name('productosgetcategoriasbyname');
 });
 
 // * Rutas para el catalogo

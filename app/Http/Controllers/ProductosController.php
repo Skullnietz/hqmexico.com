@@ -55,11 +55,46 @@ class ProductosController extends Controller
     public function show($id){
         $user = Auth::user() == null ? false: true;
         if($user){
-            return \DB::table('productos')->where('id', $id)->get();
+            $producto = (\DB::table('productos')->where('id', $id)->get())[0];
+            $categoria = (\DB::table('secciones')->select('nombre', 'id')->where('id', $producto->categoria)->get())[0];
+
+            $secciones = \DB::table('categorias')->select('nombre', 'id')->get();
+
+            return view('productos.edit')
+                ->with('producto', $producto)
+                ->with('categoria', $categoria)
+                ->with('secciones', $secciones);
         }else{
             return redirect(route('login'));
         }
     }
+
+    public function getCategoriasByID($id){
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            $categoria = (\DB::table('secciones')
+                ->select(\DB::raw('id, nombre, id_categoria as id_seccion'))
+                ->where('id', $id)
+                ->get())[0];
+            $secciones = (\DB::table('categorias')->where('id', $categoria->id_seccion)->get())[0];
+            $categorias = \DB::table('secciones')->where('id_categoria', $secciones->id)->get();
+            return $categorias;
+        }else{
+            return redirect(route('login'));
+        }
+    }
+
+    public function getCategoriasByName($nombre){
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            $secciones = (\DB::table('categorias')->where('nombre', $nombre)->get())[0];
+            $categorias = \DB::table('secciones')->where('id_categoria', $secciones->id)->get();
+            return $categorias;
+        }else{
+            return redirect(route('login'));
+        }
+    }
+
     public function create(){
         $user = Auth::user() == null ? false: true;
         if($user){
@@ -132,17 +167,13 @@ class ProductosController extends Controller
                 ->update([
                     'title' => $request->title,
                     'sku' => $request->sku,
-                    'replace_num' => $request->replace->num,
-                    'servicio' => $request->servicio == null ? 0 : $request->servicio,
+                    'replace_num' => $request->replace_num,
                     'activo' => $request->activo == null ? 1 : $request->activo,
-                    'img' => $request->img,
-                    'page' => $request->page,
-                    'fila' => $request->fila,
                     'seccion' => $request->seccion,
                     'categoria' => $request->categoria,
-                    'orden_interno' => $request->orden_interno,
+                    'marca' => $request->marca==null ? '': $request->marca,
                 ]);
-            return 'Registro actualizado';
+            return redirect()->back()->with('alert', "Registro actualizado");
         }else{
             return redirect(route('login'));
         }
@@ -158,4 +189,6 @@ class ProductosController extends Controller
             return redirect(route('login'));
         }
     }
+
+    public function edit($id){}
 }

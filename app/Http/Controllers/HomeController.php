@@ -30,7 +30,9 @@ class HomeController extends Controller
             $productos = \DB::table('productos')->count();
             $suscriptores = \DB::table('newsletter')->count();
 
-                return view('home')->with('productos', $productos)->with('suscriptores', $suscriptores);
+            return view('home')
+                ->with('productos', $productos)
+                ->with('suscriptores', $suscriptores);
         }else{
             return redirect(route('login'));
         }

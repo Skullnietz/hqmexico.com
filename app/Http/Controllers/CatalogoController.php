@@ -27,8 +27,8 @@ class CatalogoController extends Controller
     public function productos(){
         $secciones = \DB::table('categorias')->select('id', 'nombre')->get();
         $categorias = \DB::table('secciones')->get();
-        $productos = \DB::table('productos')->select('id', 'title', 'sku', 'img',  'categoria')->get();
-        //return $productos;
+        $productos = \DB::table('productos')->select('id', 'title', 'sku', 'img', 'seccion', 'categoria')->get();
+
         return view('catalogo.productos')
             ->with('secciones', $secciones)
             ->with('categorias', $categorias)
