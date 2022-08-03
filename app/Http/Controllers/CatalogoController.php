@@ -20,8 +20,28 @@ class CatalogoController extends Controller
 
     public function index()
     {
-        $secciones= Seccion::all();
+        //return view('catalogo.catalogoupdate');
 
+    }
+
+    public function edit(){
+        return view('catalogo.catalogoupdate');
+    }
+
+    public function update(Request $request){
+        $user = Auth::user() == null ? false: true;
+        if($user){
+            try{
+                \File::delete(public_path("images/catalogo.pdf"));
+            }catch(Error $e){
+                return $e;
+            }
+            
+            \Storage::disk('local')->put('catalogo.pdf', \File::get($request->file('catalogo')));
+            
+        }else{
+            return redirect(route('login'));
+        }
     }
 
     public function productos(){

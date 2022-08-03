@@ -172,7 +172,7 @@ class ProductosController extends Controller
                     'seccion' => $request->seccion,
                     'categoria' => $request->categoria,
                     'marca' => $request->marca==null ? '': $request->marca,
-                    ''
+                    'descripcion' => $request->descripcion,
                 ]);
             if($request->file('img') != ''){
                 
