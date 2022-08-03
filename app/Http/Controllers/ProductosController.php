@@ -119,7 +119,6 @@ class ProductosController extends Controller
         $user = Auth::user() == null ? false: true;
         if($user){
 
-            // ! Esta omitiendo el if pq la imagen va vacia
             $img_storage_path = "";
             if($request->file('img') != ""){
                 $file = $request->file('img');
@@ -132,7 +131,7 @@ class ProductosController extends Controller
                 $clave = array_search($sections->nombre, $countable_sections);
                 $categoria = (\DB::Table('categorias')->select('nombre')->where('id', $sections->id_categoria)->get())[0];
 
-                $img_storage_path = "productos/".str_replace(" ","_",$categoria->nombre)."/".strval($clave+1)."_".str_replace(" ", "_", $sections->nombre)."/".$file->getClientOriginalName();
+                $img_storage_path = "productos/".str_replace(" ","_",$categoria->nombre)."/".str_replace(" ", "_", $sections->nombre)."/".$file->getClientOriginalName();
                 //return $img_storage_path;
             }
 
@@ -145,7 +144,8 @@ class ProductosController extends Controller
                 'orden_interno' => 0,
                 'img' => $img_storage_path,
                 'seccion' => $request->seccion,
-                'categoria' => $request->categoria
+                'categoria' => $request->categoria,
+                'marca' => ''
             ]);
 
 
@@ -172,6 +172,7 @@ class ProductosController extends Controller
                     'seccion' => $request->seccion,
                     'categoria' => $request->categoria,
                     'marca' => $request->marca==null ? '': $request->marca,
+                    ''
                 ]);
             if($request->file('img') != ''){
                 
