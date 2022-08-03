@@ -93,14 +93,27 @@ active
                         }
                     </style>
                     <div class="card-body">
-                        <form action="../update/{{ $producto->id }}" method="post">
+                        <form action="../update/{{ $producto->id }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-4 col-sm-12">
-                                    <img src="{{ asset('images/productos/'.str_replace(' ', '_', $producto->seccion).'/'.$categoria->nombre.'/'.$producto->img) }}" alt="">
+                                    @if(File::exists(public_path("images/productos/".str_replace(' ', '_', $producto->seccion)."/".$categoria->nombre."/".$producto->img)))
+                                        <div class="drop-zone  ml-auto">
+                                            <div data-label="{{$producto->title}}" 
+                                                style="height: 300px;background-image:url('{{ asset("images/productos/".str_replace(" ", "_", $producto->seccion)."/".$categoria->nombre."/".$producto->img) }}');">
+                                            </div>
+                                            <input type="file" name="img" class="drop-zone__input">
+                                        </div>
+                                    @else
+                                        <div class="drop-zone  ml-auto">
+                                            <span class="drop-zone__prompt">Imagen del producto</span>
+                                            <input type="file" name="img" class="drop-zone__input">
+                                        </div>
+                                    @endif
+                                    
                                 </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="input-container">
+                                <div class="col-md-4 col-sm-12" style="background-color: transparent;">
+                                    <div class="input-container" style="background-color: transparent;">
                                         <label for="title">Nombre</label>
                                         <input type="text" name="title" class="form-control" value="{{ $producto->title }}">
                                     </div>
@@ -112,12 +125,12 @@ active
                                         <label for="marca">Marca</label>
                                         <input type="text" name="marca" class="form-control" value="{{ $producto->marca }}" placeholder="Marca">
                                     </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12">
-                                <div class="input-container">
+                                    <div class="input-container">
                                         <label for="replace_num">Numero de remplazo</label>
                                         <input type="text" name="replace_num" class="form-control" value="{{ $producto->replace_num }}" placeholder="Numero de remplazo">
                                     </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
                                     <div class="input-container">
                                         <label for="seccion">Seccion</label>
                                         <select name="seccion" id="seccion" class="form-control" autocomplete="off">
@@ -135,7 +148,13 @@ active
                                         <label for="categoria">Categoria</label>
                                         <select name="categoria" id="categoria" class="form-control" autocomplete="off"></select>
                                     </div>
+                                    <div class="input-container">
+                                        <label for="descripcion">Descripcion</label>
+                                        <textarea name="descripcion" class="form-control" rows="4"></textarea>
+                                    </div>
                                 </div>
+                                
+                                
                                 <div class="col-md-12 col sm-12">
                                     <center>
                                         <input type="submit" value="Guardar" class="btn btn-primary">

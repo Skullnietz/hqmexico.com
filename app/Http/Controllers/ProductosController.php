@@ -173,6 +173,15 @@ class ProductosController extends Controller
                     'categoria' => $request->categoria,
                     'marca' => $request->marca==null ? '': $request->marca,
                 ]);
+            if($request->file('img') != ''){
+                
+                $producto = \DB::table('productos')->select('seccion', 'categoria', 'img')->get()[0];
+                $categoria = \DB::table('secciones')->select('nombre')->where('id', $producto->categoria)->get()[0];
+                if(\File::exists(public_path("images/productos/".str_replace(' ', '_', $producto->seccion)."/".$categoria->nombre."/".$producto->img))){
+                    \File::delete(public_path("images/productos/".str_replace(' ', '_', $producto->seccion)."/".$categoria->nombre."/".$producto->img));
+                }
+                \Storage::disk('local')->put("productos/".str_replace(' ', '_', $producto->seccion)."/".$categoria->nombre."/".$producto->img, \File::get($request->file('img')));
+            }
             return redirect()->back()->with('alert', "Registro actualizado");
         }else{
             return redirect(route('login'));
