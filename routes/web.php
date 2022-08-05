@@ -83,7 +83,7 @@ Route::group(['prefix' => 'catalogo'], function(){
     Route::GET('/', [App\Http\Controllers\CatalogoController::class, 'index'])->name('catalogo');
     Route::GET('/edit', [App\Http\Controllers\CatalogoController::class, 'edit'])->name('catalogoedit');
     Route::POST('/update', [App\Http\Controllers\CatalogoController::class, 'update'])->name('catalogoupdate');
-    Route::get('example', function(){return view('catalogo.index');})->name('catalogoexample');
-    Route::POST('export', [App\Http\Controllers\CatalogoController::class, 'exportCatalogo'])->name('catalogoexport');
-    Route::GET('productos', [App\Http\Controllers\CatalogoController::class, 'productos'])->name('catalogoproductos');
+    //Route::get('example', function(){return view('catalogo.index');})->name('catalogoexample');
+    //Route::POST('export', [App\Http\Controllers\CatalogoController::class, 'exportCatalogo'])->name('catalogoexport');
+    //Route::GET('productos', [App\Http\Controllers\CatalogoController::class, 'productos'])->name('catalogoproductos');
 });

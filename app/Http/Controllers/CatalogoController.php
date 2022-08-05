@@ -38,7 +38,7 @@ class CatalogoController extends Controller
             }
             
             \Storage::disk('local')->put('catalogo.pdf', \File::get($request->file('catalogo')));
-            
+            return redirect(back());
         }else{
             return redirect(route('login'));
         }
